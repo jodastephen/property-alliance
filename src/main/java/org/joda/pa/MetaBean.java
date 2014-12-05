@@ -40,7 +40,19 @@ import java.util.stream.Stream;
 public interface MetaBean {
 
     /**
-     * Get the type of the bean, represented as a {@code Class}.
+     * Obtains a meta-bean for a {@code Class}.
+     * <p>
+     * A {@code MetaBean} provides an abstraction on top of a {@code Class}.
+     * 
+     * @return the meta-bean associated with the class, not null
+     */
+    static MetaBean of(Class<?> cls) {
+        return null;
+    }
+
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the type of the bean, represented as a {@code Class}.
      * <p>
      * A {@code MetaBean} can be thought of as the equivalent of {@link Class} but for beans.
      * This method allows the actual {@code Class} instance of the bean to be obtained.

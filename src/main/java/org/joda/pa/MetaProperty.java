@@ -25,7 +25,9 @@ import java.util.stream.Stream;
 /**
  * A meta-property, defining aspects of a property, such as the type and name.
  * <p>
- * A property provides access to a single piece of information on 
+ * A property provides access to a single piece of information on a bean.
+ * <p>
+ * A {@code MetaProperty} is obtained from a {@link MetaBean}.
  * 
  * @param <P>  the type of the property content
  */
@@ -139,6 +141,8 @@ public interface MetaProperty<P> {
      * Checks whether this property is buildable or not.
      * <p>
      * A buildable property can be passed into the {@link BeanBuilder} of the meta-bean.
+     * If this method returns true then {@code BeanBuilder.set()} must succeed given valid arguments.
+     * If this method returns false then {@code BeanBuilder.set()} must throw {@link UnsupportedOperationException}.
      * 
      * @return true if this property is buildable
      */

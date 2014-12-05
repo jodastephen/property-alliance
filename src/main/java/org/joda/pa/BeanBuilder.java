@@ -24,6 +24,8 @@ import java.util.Map;
  * via constructors, some via factory methods, some via dedicated builders.
  * This interface abstracts the method of construction, allowing tools
  * to create the bean regardless of the underlying method.
+ * <p>
+ * A {@code BeanBuilder} is obtained from a {@link MetaBean}.
  * 
  * @param <T>  the type of the bean to be created
  */
