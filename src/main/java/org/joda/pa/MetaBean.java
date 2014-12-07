@@ -114,6 +114,9 @@ public interface MetaBean {
      * <p>
      * A dynamic implementation of this interface may create the property on demand
      * when this method is called.
+     * <p>
+     * The default implementation applies a filter to the result of {@link #metaProperties()}
+     * and returns the first matching property.
      * 
      * @param propertyName  the property name to retrieve, null returns optional empty
      * @return the property, or optional empty if no such property

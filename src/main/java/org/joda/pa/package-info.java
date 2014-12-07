@@ -19,5 +19,12 @@
  * to abstract access to properties on Java Beans and other data objects.
  * <p>
  * The "Joda" namespace is currently used as a placeholder.
+ * <p>
+ * This package provides the main abstraction for data objects, often known as beans.
+ * The primary interface is {@link org.joda.pa.MetaBean} which provides access to
+ * the {@link org.joda.pa.MetaProperty} instances. Objects are created using
+ * {@link org.joda.pa.BeanBuilder}, allowing both mutable and immutable objects to be created.
+ * Implementing the {@link org.joda.pa.Bean} interface is optional, but does provide
+ * a hook for the manager to determine what the meta-bean and properties are for a type.
  */
 package org.joda.pa;
