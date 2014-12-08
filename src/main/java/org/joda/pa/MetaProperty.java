@@ -138,6 +138,22 @@ public interface MetaProperty<P> {
 
     //-----------------------------------------------------------------------
     /**
+     * Checks whether this property is derived or not.
+     * <p>
+     * A derived property derives its value from one or more other properties.
+     * As such, the value of a derived property is not part of the essential state of the bean.
+     * Some tools, such as a serialization framework, may choose to omit derived properties
+     * as they can be recreated by the client.
+     * <p>
+     * The default implementation returns false.
+     * 
+     * @return true if this property is derived
+     */
+    default boolean isDerived() {
+        return false;
+    }
+
+    /**
      * Checks whether this property is buildable or not.
      * <p>
      * A buildable property can be passed into the {@link BeanBuilder} of the meta-bean.
