@@ -51,6 +51,7 @@ public interface BeanBuilder<T> {
      * @param property  the property to set, not null
      * @param value  the property value, may be null
      * @return {@code this}, for chaining, not null
+     * @throws UnsupportedOperationException if the property is not {@link MetaProperty#isBuildable() buildable}
      * @throws RuntimeException if the property or builder is invalid
      */
     BeanBuilder<T> set(MetaProperty<?> property, Object value);
