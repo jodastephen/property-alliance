@@ -198,12 +198,11 @@ public interface MetaProperty<P> {
      * 
      * @param bean  the bean to update, not null
      * @param value  the value to set into the property on the specified bean, may be null
-     * @throws ClassCastException if the bean is of an incorrect type or
-     *  if the value is of an invalid type for the property
+     * @throws ClassCastException if the bean is of an incorrect type
      * @throws UnsupportedOperationException if the property is read-only
      * @throws RuntimeException if the value is rejected by the property
      */
-    void set(Object bean, Object value);
+    void set(Object bean, P value);
 
     //-----------------------------------------------------------------------
     /**
