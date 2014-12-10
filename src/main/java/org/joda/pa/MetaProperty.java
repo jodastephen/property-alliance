@@ -66,7 +66,7 @@ public interface MetaProperty<P> {
      * 
      * @return the type declaring the property, not null
      */
-    default Class<?> declaringClass() {
+    default Class<?> declaringType() {
         return metaBean().beanType();
     }
 
