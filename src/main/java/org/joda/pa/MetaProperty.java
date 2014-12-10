@@ -23,7 +23,7 @@ import java.lang.reflect.Type;
 import java.util.stream.Stream;
 
 /**
- * A meta-property, defining aspects of a property, such as the type and name.
+ * A meta-property defines aspects of a property, such as the type and name.
  * <p>
  * A property provides access to a single piece of information on a bean.
  * <p>
@@ -89,6 +89,7 @@ public interface MetaProperty<P> {
      * The default implementation returns the result of {@link #propertyType()}.
      * 
      * @return the full generic type of the property, unmodifiable, not null
+     *      (question by nipa@codefx.org: In which sense is this unmodifiable?)
      */
     default Type propertyGenericType() {
         return propertyType();
