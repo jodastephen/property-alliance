@@ -194,14 +194,20 @@ public interface MetaProperty<P> {
      * The value must be of the correct type for the property.
      * For a standard Java Bean, this is equivalent to calling {@code setFoo()} on the bean.
      * Alternate implementations may perform any logic to change the value.
+     * <p>
+     * The argument {@code value} is not generic (in {@code P}) because this would
+     * prevent calling {@code set} on {@code MetaProperty<?>}.
+     * Since meta-properties will often be handled by frameworks, this is a common use-case
+     * which needs to be supported.
      * 
      * @param bean  the bean to update, not null
      * @param value  the value to set into the property on the specified bean, may be null
-     * @throws ClassCastException if the bean is of an incorrect type
+     * @throws ClassCastException if the bean is of an incorrect type or
+     *                              if the value is of an invalid type for the property
      * @throws UnsupportedOperationException if the property is read-only
      * @throws RuntimeException if the value is rejected by the property
      */
-    void set(Object bean, P value);
+    void set(Object bean, Object value);
 
     //-----------------------------------------------------------------------
     /**
