@@ -88,8 +88,7 @@ public interface MetaProperty<P> {
      * <p>
      * The default implementation returns the result of {@link #propertyType()}.
      * 
-     * @return the full generic type of the property, unmodifiable, not null
-     *      (question by nipa@codefx.org: In which sense is this unmodifiable?)
+     * @return the full generic type of the property, not null
      */
     default Type propertyGenericType() {
         return propertyType();
