@@ -130,7 +130,7 @@ public interface MetaProperty<P> {
      * @param annotationType  the annotation type to find, not null
      * @return the annotations matching the specified type, not null
      */
-    default <A extends Annotation> Stream<A> annotation(Class<A> annotationType) {
+    default <A extends Annotation> Stream<A> annotations(Class<A> annotationType) {
         return annotations()
                 .filter(a -> a.annotationType() == annotationType)
                 .map(a -> annotationType.cast(a));
