@@ -24,3 +24,4 @@ The key part is that you assign me, Stephen Colebourne, joint copyright to your 
 
 Those developers listed below have agreed to this CLA:
 
+Nicolai Parlog - nipa
