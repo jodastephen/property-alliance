@@ -121,7 +121,6 @@ public interface MetaBean {
      * and returns the first matching property.
      * 
      * @param propertyName the property name to retrieve, null returns an empty {@code Optional}
-     *                      (question by nipa@codefx.org: why is null permitted?)
      * @return the property, or optional empty if no such property
      */
     default Optional<MetaProperty<?>> metaProperty(String propertyName) {
