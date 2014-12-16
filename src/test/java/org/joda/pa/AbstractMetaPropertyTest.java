@@ -17,6 +17,9 @@ import org.junit.Test;
 
 /**
  * Abstract superclass to tests of {@link MetaProperty} implementations.
+ * <p>
+ * Inheriting classes only need to implement various factory methods to have
+ * their unit completely tested. 
  */
 @SuppressWarnings("javadoc")
 public abstract class AbstractMetaPropertyTest {
@@ -57,7 +60,7 @@ public abstract class AbstractMetaPropertyTest {
 
         MetaProperty<Integer> primitiveIntegerMetaProperty =
                 createPrimitiveIntegerMetaProperty();
-        assertSame(Integer.class, primitiveIntegerMetaProperty.propertyType());
+        assertSame(int.class, primitiveIntegerMetaProperty.propertyType());
 
         MetaProperty<Integer> integerMetaProperty = createIntegerMetaProperty();
         assertSame(Integer.class, integerMetaProperty.propertyType());
