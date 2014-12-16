@@ -144,6 +144,14 @@ public abstract class AbstractMetaPropertyTest {
         metaProperty.get("this is no bean");
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public final void get_writeOnlyMetaProperty_UnsupportedOperationException()
+            throws Exception {
+        MetaProperty<?> readOnlyMetaProperty = createWriteOnlyObjectMetaProperty();
+        TestBean bean = createBean();
+        readOnlyMetaProperty.get(bean);
+    }
+
     @Test
     public final void set_nullForObject_valueIsNull() throws Exception {
         MetaProperty<Integer> integerMetaProperty = createIntegerMetaProperty();
@@ -242,6 +250,9 @@ public abstract class AbstractMetaPropertyTest {
             throws Exception;
 
     protected abstract MetaProperty<Object> createReadOnlyObjectMetaProperty()
+            throws Exception;
+
+    protected abstract MetaProperty<Object> createWriteOnlyObjectMetaProperty()
             throws Exception;
 
     protected abstract MetaProperty<String> createStringMetaProperty()

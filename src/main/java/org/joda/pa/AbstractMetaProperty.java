@@ -12,22 +12,25 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
     private final MetaBean metaBean;
     private final String name;
     private final Class<P> propertyTypeToken;
-    private final boolean buildable;
-    private final boolean mutable;
     private final boolean derived;
+    private final boolean buildable;
+    private final boolean readable;
+    private final boolean mutable;
 
     /**
      * This constructor does not check these arguments.
      * It relies on the calling builder to do so.
      */
-    protected AbstractMetaProperty(MetaBean metaBean, String name,
-            Class<P> propertyTypeToken, boolean buildable, boolean mutable,
-            boolean derived) {
+    protected AbstractMetaProperty(
+            MetaBean metaBean, String name, Class<P> propertyTypeToken,
+            boolean derived, boolean buildable,
+            boolean readable, boolean mutable) {
 
         this.metaBean = metaBean;
         this.name = name;
         this.propertyTypeToken = propertyTypeToken;
         this.buildable = buildable;
+        this.readable = readable;
         this.mutable = mutable;
         this.derived = derived;
     }
@@ -74,7 +77,10 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
     }
 
     private void ensurePropertyCanBeRead() {
-        // TODO check write-only, see Ticket #3; also add tests
+        if (!readable) {
+            String message = "This meta-property is write-only.";
+            throw new UnsupportedOperationException(message);
+        }
     }
 
     private void ensureBeanHasCorrectType(Object bean) {

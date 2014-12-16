@@ -40,7 +40,13 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
     @Override
     protected MetaProperty<Object> createReadOnlyObjectMetaProperty() {
         return createMetaProperty(
-                null, "object", Object.class, TestBean::getString, null, null);
+                null, "object", Object.class, TestBean::getObject, null, null);
+    }
+
+    @Override
+    protected MetaProperty<Object> createWriteOnlyObjectMetaProperty() {
+        return createMetaProperty(
+                null, "object", Object.class, null, TestBean::setObject, null);
     }
 
     private static MetaProperty<Object> createObjectMetaProperty(

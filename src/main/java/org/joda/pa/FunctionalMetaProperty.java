@@ -24,16 +24,20 @@ class FunctionalMetaProperty<P> extends AbstractMetaProperty<P> {
      */
     FunctionalMetaProperty(
             MetaBean metaBean, String name, Class<P> propertyTypeToken,
-            boolean buildable, boolean derived,
+            boolean derived, boolean buildable,
             Function<Object, P> getValue, BiConsumer<Object, P> setValue,
             Supplier<Stream<Annotation>> getAnnotations) {
 
         super(metaBean, name, propertyTypeToken,
-                buildable, isMutable(setValue), derived);
+                derived, buildable, isReadable(getValue), isMutable(setValue));
 
         this.getValue = getValue;
         this.setValue = setValue;
         this.getAnnotations = getAnnotations;
+    }
+
+    private static boolean isReadable(Function<?, ?> getValue) {
+        return getValue != null;
     }
 
     private static boolean isMutable(BiConsumer<?, ?> setValue) {

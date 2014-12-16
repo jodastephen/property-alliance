@@ -32,14 +32,23 @@ public class FieldMetaPropertyTest extends AbstractMetaPropertyTest {
     protected MetaProperty<Object> createObjectMetaPropertyWithName(String name)
             throws Exception {
         return createMetaProperty(
-                null, name, Object.class, true, false, true, "object");
+                null, name, Object.class, false, true, true, true, "object");
     }
 
     @Override
     protected MetaProperty<Object> createReadOnlyObjectMetaProperty()
             throws Exception {
         return createMetaProperty(
-                null, "object", Object.class, true, false, false, "object");
+                null, "object", Object.class,
+                false, true, true, false, "object");
+    }
+
+    @Override
+    protected MetaProperty<Object> createWriteOnlyObjectMetaProperty()
+            throws Exception {
+        return createMetaProperty(
+                null, "object", Object.class,
+                false, true, false, true, "object");
     }
 
     @Override
@@ -73,12 +82,14 @@ public class FieldMetaPropertyTest extends AbstractMetaPropertyTest {
             throws Exception {
 
         return createMetaProperty(
-                metaBean, fieldName, typeToken, true, false, true, fieldName);
+                metaBean, fieldName, typeToken, false, true, true, true,
+                fieldName);
     }
 
     private static <P> MetaProperty<P> createMetaProperty(
             MetaBean metaBean, String name, Class<P> typeToken,
-            boolean buildable, boolean derived, boolean mutable,
+            boolean derived, boolean buildable,
+            boolean readable, boolean mutable,
             String fieldName)
             throws Exception {
 
@@ -92,7 +103,7 @@ public class FieldMetaPropertyTest extends AbstractMetaPropertyTest {
 
         return new FieldMetaProperty<>(
                 notNullMetaBean, name, typeToken,
-                buildable, derived, mutable,
+                derived, buildable, readable, mutable,
                 backingField);
     }
 }

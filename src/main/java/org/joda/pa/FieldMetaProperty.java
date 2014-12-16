@@ -20,11 +20,12 @@ class FieldMetaProperty<P> extends AbstractMetaProperty<P> {
      */
     FieldMetaProperty(
             MetaBean metaBean, String name, Class<P> propertyTypeToken,
-            boolean buildable, boolean derived, boolean mutable,
+            boolean derived, boolean buildable,
+            boolean readable, boolean mutable,
             Field backingField) {
 
         super(metaBean, name, propertyTypeToken,
-                buildable, mutable, derived);
+                derived, buildable, readable, mutable);
 
         this.backingField = backingField;
         makeAccessible(backingField);
