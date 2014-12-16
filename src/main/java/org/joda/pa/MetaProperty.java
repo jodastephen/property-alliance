@@ -23,7 +23,7 @@ import java.lang.reflect.Type;
 import java.util.stream.Stream;
 
 /**
- * A meta-property, defining aspects of a property, such as the type and name.
+ * A meta-property defines aspects of a property, such as the type and name.
  * <p>
  * A property provides access to a single piece of information on a bean.
  * <p>
@@ -66,7 +66,7 @@ public interface MetaProperty<P> {
      * 
      * @return the type declaring the property, not null
      */
-    default Class<?> declaringClass() {
+    default Class<?> declaringType() {
         return metaBean().beanType();
     }
 
@@ -88,7 +88,7 @@ public interface MetaProperty<P> {
      * <p>
      * The default implementation returns the result of {@link #propertyType()}.
      * 
-     * @return the full generic type of the property, unmodifiable, not null
+     * @return the full generic type of the property, not null
      */
     default Type propertyGenericType() {
         return propertyType();
@@ -194,11 +194,16 @@ public interface MetaProperty<P> {
      * The value must be of the correct type for the property.
      * For a standard Java Bean, this is equivalent to calling {@code setFoo()} on the bean.
      * Alternate implementations may perform any logic to change the value.
+     * <p>
+     * The argument {@code value} is not generic (in {@code P}) because this would
+     * prevent calling {@code set} on {@code MetaProperty<?>}.
+     * Since meta-properties will often be handled by frameworks, this is a common use-case
+     * which needs to be supported.
      * 
      * @param bean  the bean to update, not null
      * @param value  the value to set into the property on the specified bean, may be null
      * @throws ClassCastException if the bean is of an incorrect type or
-     *  if the value is of an invalid type for the property
+     *                              if the value is of an invalid type for the property
      * @throws UnsupportedOperationException if the property is read-only
      * @throws RuntimeException if the value is rejected by the property
      */
