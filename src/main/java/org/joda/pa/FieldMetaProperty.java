@@ -55,6 +55,11 @@ class FieldMetaProperty<P> extends AbstractMetaProperty<P> {
         try {
             Object untypedValue = backingField.get(bean);
             return propertyType().cast(untypedValue);
+        } catch (IllegalAccessException ex) {
+            // because the backing field is made accessible during construction,
+            // this exception should never occur
+            String message = "The field backing this meta-property is not accessible.";
+            throw new RuntimeException(message, ex);
         } catch (IllegalArgumentException ex) {
             // this exception can only occur if the bean does not have the correct type;
             // this was already checked by the superclass so this should not happen
@@ -62,11 +67,6 @@ class FieldMetaProperty<P> extends AbstractMetaProperty<P> {
                     + "does not declare the field backing this meta-property: "
                     + ex.getMessage();
             throw new ClassCastException(message);
-        } catch (IllegalAccessException ex) {
-            // because the backing field is made accessible during construction,
-            // this exception should never occur
-            String message = "The field backing this meta-property is not accessible.";
-            throw new RuntimeException(message, ex);
         }
     }
 
@@ -74,6 +74,11 @@ class FieldMetaProperty<P> extends AbstractMetaProperty<P> {
     protected void setToBean(Object bean, P value) {
         try {
             backingField.set(bean, value);
+        } catch (IllegalAccessException ex) {
+            // because the backing field is made accessible during construction,
+            // this exception should never occur
+            String message = "The field backing this meta-property is not accessible.";
+            throw new RuntimeException(message, ex);
         } catch (IllegalArgumentException ex) {
             // this exception can occur for two reasons:
             //  - if the bean does not have the correct type;
@@ -86,11 +91,6 @@ class FieldMetaProperty<P> extends AbstractMetaProperty<P> {
                     + "because the types do not match: "
                     + ex.getMessage();
             throw new ClassCastException(message);
-        } catch (IllegalAccessException ex) {
-            // because the backing field is made accessible during construction,
-            // this exception should never occur
-            String message = "The field backing this meta-property is not accessible.";
-            throw new RuntimeException(message, ex);
         }
     }
 }
