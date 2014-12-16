@@ -107,7 +107,7 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
         MetaBean notNullMetaBean = metaBean;
         if (notNullMetaBean == null) {
             notNullMetaBean = mock(MetaBean.class);
-            doReturn(TestBean.class).when(metaBean).beanType();
+            doReturn(TestBean.class).when(notNullMetaBean).beanType();
         }
 
         Function<Object, P> get = getValue == null
