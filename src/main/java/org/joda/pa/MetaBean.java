@@ -44,6 +44,7 @@ public interface MetaBean {
      * <p>
      * A {@code MetaBean} provides an abstraction on top of a {@code Class}.
      * 
+     * @param cls  the class whose associated {@code MetaBean} will be obtained
      * @return the meta-bean associated with the class, not null
      */
     static MetaBean of(Class<?> cls) {
@@ -84,6 +85,7 @@ public interface MetaBean {
      * 
      * @return the bean builder, not null
      * @throws UnsupportedOperationException if the bean cannot be created
+     * @see #isBuildable()
      */
     BeanBuilder<?> beanBuilder();
 
@@ -110,7 +112,7 @@ public interface MetaBean {
      * This is typically accomplished by querying the properties of an underlying
      * {@link Class} however any strategy is permitted.
      * This method returns the property with the specified name,
-     * or optional empty if the name is not known.
+     * or an empty {@code Optional} if the name is not known.
      * <p>
      * A dynamic implementation of this interface may create the property on demand
      * when this method is called.
@@ -118,7 +120,7 @@ public interface MetaBean {
      * The default implementation applies a filter to the result of {@link #metaProperties()}
      * and returns the first matching property.
      * 
-     * @param propertyName  the property name to retrieve, null returns optional empty
+     * @param propertyName the property name to retrieve, null returns an empty {@code Optional}
      * @return the property, or optional empty if no such property
      */
     default Optional<MetaProperty<?>> metaProperty(String propertyName) {
@@ -139,7 +141,7 @@ public interface MetaBean {
      * this method must stream over those annotations in existence when this method
      * is called to avoid concurrency issues.
      * 
-     * @return the stream of annotations on the property, not null
+     * @return the stream of annotations, not null
      */
     Stream<Annotation> annotations();
 
@@ -163,7 +165,7 @@ public interface MetaBean {
      * @param annotationType  the annotation type to find, not null
      * @return the annotations matching the specified type, not null
      */
-    default <A extends Annotation> Stream<A> annotation(Class<A> annotationType) {
+    default <A extends Annotation> Stream<A> annotations(Class<A> annotationType) {
         return annotations()
                 .filter(a -> a.annotationType() == annotationType)
                 .map(a -> annotationType.cast(a));
