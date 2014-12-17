@@ -84,12 +84,12 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
     }
 
     private void ensureBeanHasCorrectType(Object bean) {
-        boolean beanHasIncorrectType = !declaringClass().isInstance(bean);
+        boolean beanHasIncorrectType = !declaringType().isInstance(bean);
         if (beanHasIncorrectType) {
             String message = "The specified bean " + bean + " is of type '"
                     + bean.getClass() + "' which is not assignment compatible"
                     + " with this meta-property's declaring type '"
-                    + declaringClass() + "'.";
+                    + declaringType() + "'.";
             throw new ClassCastException(message);
         }
     }

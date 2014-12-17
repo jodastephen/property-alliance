@@ -38,7 +38,7 @@ public abstract class AbstractMetaPropertyTest {
     public final void declaringClass_compareWithBeanClass_same()
             throws Exception {
         MetaProperty<?> metaProperty = createObjectMetaProperty();
-        assertSame(TestBean.class, metaProperty.declaringClass());
+        assertSame(TestBean.class, metaProperty.declaringType());
     }
 
     @Test

@@ -41,7 +41,7 @@ class FieldMetaProperty<P> extends AbstractMetaProperty<P> {
     }
 
     @Override
-    public <A extends Annotation> Stream<A> annotation(Class<A> annotationType) {
+    public <A extends Annotation> Stream<A> annotations(Class<A> annotationType) {
         A annotation = backingField.getAnnotation(annotationType);
         if (annotation == null) {
             return Stream.empty();
