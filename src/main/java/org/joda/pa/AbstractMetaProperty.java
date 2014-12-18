@@ -152,16 +152,16 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof AbstractMetaProperty)) {
+        if (!(obj instanceof MetaProperty)) {
             return false;
         }
 
         @SuppressWarnings("rawtypes")
-        AbstractMetaProperty other = (AbstractMetaProperty) obj;
-        if (!Objects.equals(metaBean, other.metaBean)) {
+        MetaProperty other = (MetaProperty) obj;
+        if (!Objects.equals(declaringType(), other.declaringType())) {
             return false;
         }
-        if (!Objects.equals(name, other.name)) {
+        if (!Objects.equals(name(), other.name())) {
             return false;
         }
 
