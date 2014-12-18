@@ -71,12 +71,12 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
     public final P get(Object bean) {
         Objects.requireNonNull(bean, "The argument 'bean' must not be null.");
 
-        ensurePropertyCanBeRead();
+        ensurePropertyIsReadable();
         ensureBeanHasCorrectType(bean);
         return getFromBean(bean);
     }
 
-    private void ensurePropertyCanBeRead() {
+    private void ensurePropertyIsReadable() {
         if (!readable) {
             String message = "This meta-property is write-only.";
             throw new UnsupportedOperationException(message);
