@@ -48,8 +48,20 @@ class MethodMetaProperty<P> extends AbstractMetaProperty<P> {
 
     @Override
     public Stream<Annotation> annotations() {
-        // TODO (nipa@codefx.org)
-        return null;
+        Stream<Annotation> annotationsOnGetValue =
+                Stream.of(getValue.getAnnotations());
+        Stream<Annotation> annotationsOnSetValue =
+                Stream.of(setValue.getAnnotations());
+        return Stream.concat(annotationsOnGetValue, annotationsOnSetValue);
+    }
+
+    @Override
+    public <A extends Annotation> Stream<A> annotations(Class<A> annotationType) {
+        A annotationOnGetValue = getValue.getAnnotation(annotationType);
+        A annotationOnSetValue = setValue.getAnnotation(annotationType);
+        return Stream
+                .of(annotationOnGetValue, annotationOnSetValue)
+                .filter(element -> element != null);
     }
 
     @Override
