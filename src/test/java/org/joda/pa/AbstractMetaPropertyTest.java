@@ -31,14 +31,14 @@ public abstract class AbstractMetaPropertyTest {
             throws Exception {
         MetaBean metaBean = mock(MetaBean.class);
         MetaProperty<?> metaProperty = createObjectMetaPropertyWithMetaBean(metaBean);
-        assertSame(metaBean, metaProperty.metaBean());
+        assertSame(metaProperty.metaBean(), metaBean);
     }
 
     @Test
     public final void declaringClass_compareWithBeanClass_same()
             throws Exception {
         MetaProperty<?> metaProperty = createObjectMetaProperty();
-        assertSame(TestBean.class, metaProperty.declaringType());
+        assertSame(metaProperty.declaringType(), TestBean.class);
     }
 
     @Test
@@ -46,28 +46,28 @@ public abstract class AbstractMetaPropertyTest {
             throws Exception {
         String name = "thePropertyName";
         MetaProperty<?> metaProperty = createObjectMetaPropertyWithName(name);
-        assertEquals(name, metaProperty.name());
+        assertEquals(metaProperty.name(), name);
     }
 
     @Test
     public final void propertyType_compareWithIntendedType_same()
             throws Exception {
         MetaProperty<Object> objectMetaProperty = createObjectMetaProperty();
-        assertSame(Object.class, objectMetaProperty.propertyType());
+        assertSame(objectMetaProperty.propertyType(), Object.class);
 
         MetaProperty<String> stringMetaProperty = createStringMetaProperty();
-        assertSame(String.class, stringMetaProperty.propertyType());
+        assertSame(stringMetaProperty.propertyType(), String.class);
 
         MetaProperty<Integer> primitiveIntegerMetaProperty =
                 createPrimitiveIntegerMetaProperty();
-        assertSame(int.class, primitiveIntegerMetaProperty.propertyType());
+        assertSame(primitiveIntegerMetaProperty.propertyType(), int.class);
 
         MetaProperty<Integer> integerMetaProperty = createIntegerMetaProperty();
-        assertSame(Integer.class, integerMetaProperty.propertyType());
+        assertSame(integerMetaProperty.propertyType(), Integer.class);
 
         MetaProperty<List<Double>> doubleListMetaProperty =
                 createDoubleListMetaProperty();
-        assertSame(List.class, doubleListMetaProperty.propertyType());
+        assertSame(doubleListMetaProperty.propertyType(), List.class);
     }
 
     // TODO add tests for 'propertyGenericType'  
@@ -79,7 +79,7 @@ public abstract class AbstractMetaPropertyTest {
             throws Exception {
         MetaProperty<?> notAnnotatedMetaProperty = createObjectMetaProperty();
         Stream<Annotation> annotations = notAnnotatedMetaProperty.annotations();
-        assertEquals(0, annotations.count());
+        assertEquals(annotations.count(), 0);
     }
 
     @Test
@@ -89,13 +89,13 @@ public abstract class AbstractMetaPropertyTest {
 
         // reports exactly 1 annotation
         Stream<Annotation> annotations = annotatedMetaProperty.annotations();
-        assertEquals(1, annotations.count());
+        assertEquals(annotations.count(), 1);
 
         // reports an annotation of the correct type
         annotations = annotatedMetaProperty.annotations();
         Stream<Annotation> anyAnnotations =
                 annotations.filter(a -> a instanceof AnyAnnotation);
-        assertEquals(1, anyAnnotations.count());
+        assertEquals(anyAnnotations.count(), 1);
     }
 
     /*
@@ -137,7 +137,7 @@ public abstract class AbstractMetaPropertyTest {
         String value = "the not null value";
         bean.setString(value);
 
-        assertSame(value, stringMetaProperty.get(bean));
+        assertSame(stringMetaProperty.get(bean), value);
     }
 
     @Test(expectedExceptions = ClassCastException.class)
@@ -161,7 +161,7 @@ public abstract class AbstractMetaPropertyTest {
 
         TestBean bean = createBean();
         bean.setInteger(42);
-        assertEquals((Integer) 42, bean.getInteger());
+        assertEquals(bean.getInteger(), (Integer) 42);
         integerMetaProperty.set(bean, null);
 
         assertNull(bean.getInteger());
@@ -177,7 +177,7 @@ public abstract class AbstractMetaPropertyTest {
                 Stream.of(1d, 2d, 8d, 42d, 63d).collect(Collectors.toList());
         doubleListMetaProperty.set(bean, doubleList);
 
-        assertSame(doubleList, bean.getDoubleList());
+        assertSame(bean.getDoubleList(), doubleList);
     }
 
     @Test(expectedExceptions = ClassCastException.class)
