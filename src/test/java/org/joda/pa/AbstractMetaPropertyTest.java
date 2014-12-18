@@ -8,6 +8,7 @@ import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Retention;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -83,7 +84,7 @@ public abstract class AbstractMetaPropertyTest {
     }
 
     @Test
-    public final void annotations_propertyWithAnnotations_reportsCorrectAnnotations()
+    public final void annotations_propertyWithAnnotations_reportsAnnotations()
             throws Exception {
         MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
 
@@ -96,6 +97,35 @@ public abstract class AbstractMetaPropertyTest {
         Stream<Annotation> otherAnnotations =
                 annotations.filter(a -> !(a instanceof AnyAnnotation));
         assertEquals(otherAnnotations.count(), 0);
+    }
+
+    @Test
+    public final void annotationsFiltered_propertyWithoutAnnotations_reportsNoAnnotations()
+            throws Exception {
+        MetaProperty<?> notAnnotatedMetaProperty = createObjectMetaProperty();
+        Stream<? extends Annotation> annotations =
+                notAnnotatedMetaProperty.annotations(AnyAnnotation.class);
+        assertEquals(annotations.count(), 0);
+    }
+
+    @Test
+    public final void annotationsFiltered_propertyWithoutMatchingAnnotations_reportsNoAnnotations()
+            throws Exception {
+        MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
+        Stream<? extends Annotation> annotations =
+                annotatedMetaProperty.annotations(Retention.class);
+        assertEquals(annotations.count(), 0);
+    }
+
+    @Test
+    public final void annotationsFiltered_propertyWithMatchingAnnotations_reportsAnnotations()
+            throws Exception {
+        MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
+
+        // reports at least one annotation
+        Stream<AnyAnnotation> annotations =
+                annotatedMetaProperty.annotations(AnyAnnotation.class);
+        assertTrue(annotations.count() >= 1);
     }
 
     /*
