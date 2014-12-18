@@ -87,15 +87,15 @@ public abstract class AbstractMetaPropertyTest {
             throws Exception {
         MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
 
-        // reports exactly 1 annotation
+        // reports at least one annotation
         Stream<Annotation> annotations = annotatedMetaProperty.annotations();
-        assertEquals(annotations.count(), 1);
+        assertTrue(annotations.count() >= 1);
 
-        // reports an annotation of the correct type
+        // reports only annotations of the correct type
         annotations = annotatedMetaProperty.annotations();
-        Stream<Annotation> anyAnnotations =
-                annotations.filter(a -> a instanceof AnyAnnotation);
-        assertEquals(anyAnnotations.count(), 1);
+        Stream<Annotation> otherAnnotations =
+                annotations.filter(a -> !(a instanceof AnyAnnotation));
+        assertEquals(otherAnnotations.count(), 0);
     }
 
     /*
