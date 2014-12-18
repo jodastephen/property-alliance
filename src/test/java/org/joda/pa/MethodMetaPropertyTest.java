@@ -20,7 +20,7 @@ public class MethodMetaPropertyTest extends
         AbstractFieldNameBasedMetaPropertyTest {
 
     @Test
-    public final void annotations_propertyWithTwoAnnotations_reportsAnnotations()
+    public final void annotations_methodsWithTwoAnnotations_reportsAnnotations()
             throws Exception {
         MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
 
@@ -43,7 +43,7 @@ public class MethodMetaPropertyTest extends
     }
 
     @Test
-    public final void annotationsFilter_propertyWithTwoAnnotations_reportsAnnotation()
+    public final void annotationsFilter_methodsWithTwoAnnotations_reportsAnnotation()
             throws Exception {
         MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
 
