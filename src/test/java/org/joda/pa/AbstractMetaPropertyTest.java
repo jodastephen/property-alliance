@@ -291,10 +291,11 @@ public abstract class AbstractMetaPropertyTest {
      *  - annotations (only tested superficially in this class):
      *     - reports no annotations on the object property
      *     - reports 'AnyAnnotation' on the string property
+     *     - (other property annotations are not tested)
      *  - is not derived
      *  - is buildable 
      *  - is mutable, i.e. not read-only
-     *  - accepts all values valid for the corresponding bean setter
+     *  - accepts all values, which are valid for the corresponding bean setter
      *  
      * Divergent behavior is specified by the factory method's name.
      */
