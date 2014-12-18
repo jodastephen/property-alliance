@@ -42,6 +42,22 @@ public class MethodMetaPropertyTest extends
         assertEquals(annotationsOnSet, 1);
     }
 
+    @Test
+    public final void annotationsFilter_propertyWithTwoAnnotations_reportsAnnotation()
+            throws Exception {
+        MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
+
+        // report exactly one annotation on get
+        Stream<? extends Annotation> annotationsOnGet =
+                annotatedMetaProperty.annotations(GetAnnotation.class);
+        assertEquals(annotationsOnGet.count(), 1);
+
+        // report exactly one annotation on set
+        Stream<? extends Annotation> annotationsOnSet =
+                annotatedMetaProperty.annotations(SetAnnotation.class);
+        assertEquals(annotationsOnSet.count(), 1);
+    }
+
     // implementation of 'AbstractFieldNameBasedMetaPropertyTest' -------------
 
     @Override
