@@ -31,15 +31,17 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
             throws Exception {
         MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
 
-        // report all three annotations
-        Stream<Annotation> annotations = annotatedMetaProperty.annotations();
-        assertEquals(annotations.count(), 3);
+        // report exactly three annotation
+        long annotationsCount = annotatedMetaProperty
+                .annotations()
+                .count();
+        assertEquals(annotationsCount, 3);
 
         // report annotations of the correct type
-        boolean allOfCorrectType = annotatedMetaProperty
+        boolean annotationsOfCorrectType = annotatedMetaProperty
                 .annotations()
                 .allMatch(AnyAnnotation.class::isInstance);
-        assertTrue(allOfCorrectType);
+        assertTrue(annotationsOfCorrectType);
     }
 
     @Test
@@ -52,21 +54,21 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
         assertEquals(annotations.count(), 3);
 
         // report annotations of the correct type
-        long annotationsOnField = annotatedMetaProperty
+        long annotationsCountOnField = annotatedMetaProperty
                 .annotations()
                 .filter(FieldAnnotation.class::isInstance)
                 .count();
-        assertEquals(annotationsOnField, 1);
-        long annotationsOnSet = annotatedMetaProperty
-                .annotations()
-                .filter(SetAnnotation.class::isInstance)
-                .count();
-        assertEquals(annotationsOnSet, 1);
-        long annotationsOnGet = annotatedMetaProperty
+        assertEquals(annotationsCountOnField, 1);
+        long annotationsCountOnGet = annotatedMetaProperty
                 .annotations()
                 .filter(GetAnnotation.class::isInstance)
                 .count();
-        assertEquals(annotationsOnGet, 1);
+        assertEquals(annotationsCountOnGet, 1);
+        long annotationsCountOnSet = annotatedMetaProperty
+                .annotations()
+                .filter(SetAnnotation.class::isInstance)
+                .count();
+        assertEquals(annotationsCountOnSet, 1);
     }
 
     @Test
@@ -75,19 +77,22 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
         MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
 
         // report exactly one field annotation
-        Stream<? extends Annotation> annotationsOnField =
-                annotatedMetaProperty.annotations(FieldAnnotation.class);
-        assertEquals(annotationsOnField.count(), 1);
+        long annotationsCountOnField = annotatedMetaProperty
+                .annotations(FieldAnnotation.class)
+                .count();
+        assertEquals(annotationsCountOnField, 1);
 
         // report exactly one get annotation
-        Stream<? extends Annotation> annotationsOnGet =
-                annotatedMetaProperty.annotations(GetAnnotation.class);
-        assertEquals(annotationsOnGet.count(), 1);
+        long annotationsCountOnGet = annotatedMetaProperty
+                .annotations(GetAnnotation.class)
+                .count();
+        assertEquals(annotationsCountOnGet, 1);
 
         // report exactly one set annotation
-        Stream<? extends Annotation> annotationsOnSet =
-                annotatedMetaProperty.annotations(SetAnnotation.class);
-        assertEquals(annotationsOnSet.count(), 1);
+        long annotationsCountOnSet = annotatedMetaProperty
+                .annotations(SetAnnotation.class)
+                .count();
+        assertEquals(annotationsCountOnSet, 1);
     }
 
     // implementation of 'AbstractMetaPropertyTest' -------------

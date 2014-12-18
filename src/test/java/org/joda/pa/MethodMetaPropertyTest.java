@@ -4,9 +4,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertEquals;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.stream.Stream;
 
 import org.joda.pa.TestBean.GetAnnotation;
 import org.joda.pa.TestBean.SetAnnotation;
@@ -24,22 +22,23 @@ public class MethodMetaPropertyTest extends
             throws Exception {
         MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
 
-        Stream<Annotation> annotations = annotatedMetaProperty.annotations();
-
-        // report exactly two annotations
-        assertEquals(annotations.count(), 2);
+        // report exactly two annotation
+        long annotationsCount = annotatedMetaProperty
+                .annotations()
+                .count();
+        assertEquals(annotationsCount, 2);
 
         // report annotations of the correct type
-        long annotationsOnGet = annotatedMetaProperty
+        long annotationsCountOnGet = annotatedMetaProperty
                 .annotations()
                 .filter(GetAnnotation.class::isInstance)
                 .count();
-        assertEquals(annotationsOnGet, 1);
-        long annotationsOnSet = annotatedMetaProperty
+        assertEquals(annotationsCountOnGet, 1);
+        long annotationsCountOnSet = annotatedMetaProperty
                 .annotations()
                 .filter(SetAnnotation.class::isInstance)
                 .count();
-        assertEquals(annotationsOnSet, 1);
+        assertEquals(annotationsCountOnSet, 1);
     }
 
     @Test
@@ -48,14 +47,16 @@ public class MethodMetaPropertyTest extends
         MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
 
         // report exactly one annotation on get
-        Stream<? extends Annotation> annotationsOnGet =
-                annotatedMetaProperty.annotations(GetAnnotation.class);
-        assertEquals(annotationsOnGet.count(), 1);
+        long annotationsCountOnGet = annotatedMetaProperty
+                .annotations(GetAnnotation.class)
+                .count();
+        assertEquals(annotationsCountOnGet, 1);
 
         // report exactly one annotation on set
-        Stream<? extends Annotation> annotationsOnSet =
-                annotatedMetaProperty.annotations(SetAnnotation.class);
-        assertEquals(annotationsOnSet.count(), 1);
+        long annotationsCountOnSet = annotatedMetaProperty
+                .annotations(SetAnnotation.class)
+                .count();
+        assertEquals(annotationsCountOnSet, 1);
     }
 
     // implementation of 'AbstractFieldNameBasedMetaPropertyTest' -------------

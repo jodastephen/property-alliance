@@ -7,7 +7,6 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
-import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,8 +78,10 @@ public abstract class AbstractMetaPropertyTest {
     public final void annotations_propertyWithoutAnnotations_reportsNoAnnotations()
             throws Exception {
         MetaProperty<?> notAnnotatedMetaProperty = createObjectMetaProperty();
-        Stream<Annotation> annotations = notAnnotatedMetaProperty.annotations();
-        assertEquals(annotations.count(), 0);
+        long annotationsCount = notAnnotatedMetaProperty
+                .annotations()
+                .count();
+        assertEquals(annotationsCount, 0);
     }
 
     @Test
@@ -89,32 +90,36 @@ public abstract class AbstractMetaPropertyTest {
         MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
 
         // reports at least one annotation
-        Stream<Annotation> annotations = annotatedMetaProperty.annotations();
-        assertTrue(annotations.count() >= 1);
+        long annotationsCount = annotatedMetaProperty
+                .annotations()
+                .count();
+        assertTrue(annotationsCount >= 1);
 
         // reports only annotations of the correct type
-        annotations = annotatedMetaProperty.annotations();
-        Stream<Annotation> otherAnnotations =
-                annotations.filter(a -> !(a instanceof AnyAnnotation));
-        assertEquals(otherAnnotations.count(), 0);
+        boolean allAnnotationsOfCorrectType = annotatedMetaProperty
+                .annotations()
+                .allMatch(AnyAnnotation.class::isInstance);
+        assertTrue(allAnnotationsOfCorrectType);
     }
 
     @Test
     public final void annotationsFiltered_propertyWithoutAnnotations_reportsNoAnnotations()
             throws Exception {
         MetaProperty<?> notAnnotatedMetaProperty = createObjectMetaProperty();
-        Stream<? extends Annotation> annotations =
-                notAnnotatedMetaProperty.annotations(AnyAnnotation.class);
-        assertEquals(annotations.count(), 0);
+        long annotationsCount = notAnnotatedMetaProperty
+                .annotations()
+                .count();
+        assertEquals(annotationsCount, 0);
     }
 
     @Test
     public final void annotationsFiltered_propertyWithoutMatchingAnnotations_reportsNoAnnotations()
             throws Exception {
         MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
-        Stream<? extends Annotation> annotations =
-                annotatedMetaProperty.annotations(Retention.class);
-        assertEquals(annotations.count(), 0);
+        long notExistingAnnotationsCount = annotatedMetaProperty
+                .annotations(Retention.class)
+                .count();
+        assertEquals(notExistingAnnotationsCount, 0);
     }
 
     @Test
@@ -123,9 +128,10 @@ public abstract class AbstractMetaPropertyTest {
         MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
 
         // reports at least one annotation
-        Stream<AnyAnnotation> annotations =
-                annotatedMetaProperty.annotations(AnyAnnotation.class);
-        assertTrue(annotations.count() >= 1);
+        long annotationsCount = annotatedMetaProperty
+                .annotations(AnyAnnotation.class)
+                .count();
+        assertTrue(annotationsCount >= 1);
     }
 
     /*

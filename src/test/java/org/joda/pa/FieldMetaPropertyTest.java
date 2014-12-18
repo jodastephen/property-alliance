@@ -3,10 +3,9 @@ package org.joda.pa;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.stream.Stream;
 
 import org.joda.pa.TestBean.FieldAnnotation;
 import org.testng.annotations.Test;
@@ -24,15 +23,16 @@ public class FieldMetaPropertyTest extends
         MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
 
         // report exactly one annotation
-        Stream<Annotation> annotations = annotatedMetaProperty.annotations();
-        assertEquals(annotations.count(), 1);
+        long annotationsCount = annotatedMetaProperty
+                .annotations()
+                .count();
+        assertEquals(annotationsCount, 1);
 
         // report an annotation of the correct type
-        long annotationsOnField = annotatedMetaProperty
+        boolean annotationOfCorrectType = annotatedMetaProperty
                 .annotations()
-                .filter(FieldAnnotation.class::isInstance)
-                .count();
-        assertEquals(annotationsOnField, 1);
+                .allMatch(FieldAnnotation.class::isInstance);
+        assertTrue(annotationOfCorrectType);
     }
 
     @Test
@@ -41,9 +41,10 @@ public class FieldMetaPropertyTest extends
         MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
 
         // report exactly one annotation
-        Stream<? extends Annotation> annotationsOnField =
-                annotatedMetaProperty.annotations(FieldAnnotation.class);
-        assertEquals(annotationsOnField.count(), 1);
+        long annotationsCount = annotatedMetaProperty
+                .annotations(FieldAnnotation.class)
+                .count();
+        assertEquals(annotationsCount, 1);
     }
 
     // implementation of 'AbstractFieldNameBasedMetaPropertyTest' -------------
