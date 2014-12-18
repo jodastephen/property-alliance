@@ -2,19 +2,95 @@ package org.joda.pa;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import org.joda.pa.TestBean.AnyAnnotation;
+import org.joda.pa.TestBean.FieldAnnotation;
+import org.joda.pa.TestBean.GetAnnotation;
+import org.joda.pa.TestBean.SetAnnotation;
+import org.testng.annotations.Test;
+
 /**
  * Tests the class {@link FunctionalMetaProperty}.
  */
+@SuppressWarnings("javadoc")
 public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
+
+    @Test
+    public final void annotations_fieldAndMethodWithSameAnnotations_reportsAnnotations()
+            throws Exception {
+        MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
+
+        // report all three annotations
+        Stream<Annotation> annotations = annotatedMetaProperty.annotations();
+        assertEquals(annotations.count(), 3);
+
+        // report annotations of the correct type
+        boolean allOfCorrectType = annotatedMetaProperty
+                .annotations()
+                .allMatch(AnyAnnotation.class::isInstance);
+        assertTrue(allOfCorrectType);
+    }
+
+    @Test
+    public final void annotations_fieldAndMethodWithDistinctAnnotations_reportsAnnotations()
+            throws Exception {
+        MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
+
+        // report all three annotations
+        Stream<Annotation> annotations = annotatedMetaProperty.annotations();
+        assertEquals(annotations.count(), 3);
+
+        // report annotations of the correct type
+        long annotationsOnField = annotatedMetaProperty
+                .annotations()
+                .filter(FieldAnnotation.class::isInstance)
+                .count();
+        assertEquals(annotationsOnField, 1);
+        long annotationsOnSet = annotatedMetaProperty
+                .annotations()
+                .filter(SetAnnotation.class::isInstance)
+                .count();
+        assertEquals(annotationsOnSet, 1);
+        long annotationsOnGet = annotatedMetaProperty
+                .annotations()
+                .filter(GetAnnotation.class::isInstance)
+                .count();
+        assertEquals(annotationsOnGet, 1);
+    }
+
+    @Test
+    public final void annotationsFiltered_fieldAndMethodWithDistinctAnnotations_reportsAnnotation()
+            throws Exception {
+        MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
+
+        // report exactly one field annotation
+        Stream<? extends Annotation> annotationsOnField =
+                annotatedMetaProperty.annotations(FieldAnnotation.class);
+        assertEquals(annotationsOnField.count(), 1);
+
+        // report exactly one get annotation
+        Stream<? extends Annotation> annotationsOnGet =
+                annotatedMetaProperty.annotations(GetAnnotation.class);
+        assertEquals(annotationsOnGet.count(), 1);
+
+        // report exactly one set annotation
+        Stream<? extends Annotation> annotationsOnSet =
+                annotatedMetaProperty.annotations(SetAnnotation.class);
+        assertEquals(annotationsOnSet.count(), 1);
+    }
+
+    // implementation of 'AbstractMetaPropertyTest' -------------
 
     @Override
     protected TestBean createBean() {
@@ -61,18 +137,45 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
         Function<TestBean, String> getValue = TestBean::getString;
         BiConsumer<TestBean, String> setValue = TestBean::setString;
         Supplier<Stream<Annotation>> annotations =
-                FunctionalMetaPropertyTest::getStringFieldAnnotations;
+                () -> getAnnotations(
+                        "string", "getString", "setString", String.class);
         return createMetaProperty(
                 null, "string", String.class, getValue, setValue, annotations);
     }
 
-    private static Stream<Annotation> getStringFieldAnnotations() {
+    private static Stream<Annotation> getAnnotations(
+            String fieldName, String getMethodName, String setMethodName,
+            Class<?> propertyType) {
+
+        Stream<Annotation> methodAnnotations = Stream.concat(
+                getMethodAnnotations(getMethodName),
+                getMethodAnnotations(setMethodName, propertyType)
+                );
+        return Stream.concat(
+                getFieldAnnotations(fieldName),
+                methodAnnotations
+                );
+    }
+
+    private static Stream<Annotation> getFieldAnnotations(String fieldName) {
         try {
-            Field stringField = FieldBackedTestBean.class
-                    .getDeclaredField("string");
-            Annotation[] annots = stringField.getAnnotations();
+            Field field = FieldBackedTestBean.class.getDeclaredField(fieldName);
+            Annotation[] annots = field.getAnnotations();
             return Stream.of(annots);
         } catch (NoSuchFieldException | SecurityException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private static Stream<Annotation> getMethodAnnotations(
+            String methodName, Class<?>... parameters) {
+
+        try {
+            Method method = FieldBackedTestBean.class
+                    .getDeclaredMethod(methodName, parameters);
+            Annotation[] annots = method.getAnnotations();
+            return Stream.of(annots);
+        } catch (NoSuchMethodException | SecurityException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -90,8 +193,11 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
     protected MetaProperty<Integer> createIntegerMetaProperty() {
         Function<TestBean, Integer> getValue = TestBean::getInteger;
         BiConsumer<TestBean, Integer> setValue = TestBean::setInteger;
+        Supplier<Stream<Annotation>> annotations =
+                () -> getAnnotations(
+                        "integer", "getInteger", "setInteger", Integer.class);
         return createMetaProperty(
-                null, "integer", Integer.class, getValue, setValue, null);
+                null, "integer", Integer.class, getValue, setValue, annotations);
     }
 
     @Override
