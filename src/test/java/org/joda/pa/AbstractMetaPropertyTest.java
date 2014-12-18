@@ -7,6 +7,7 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -274,7 +275,48 @@ public abstract class AbstractMetaPropertyTest {
 
     // equals & hashCode-------------------------------------------------------
 
-    // TODO add tests for 'equals', 'hashCode'
+    @Test
+    public final void equals_otherBeanOtherName_false() throws Exception {
+        MetaProperty<?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
+        MetaProperty<?> otherMetaPropertyOnSomeBean =
+                new ComparisonMetaProperty(
+                        AbstractMetaPropertyTest.class, "somePropertyName");
+
+        assertFalse(objectMetaPropertyOnTestBean
+                .equals(otherMetaPropertyOnSomeBean));
+    }
+
+    @Test
+    public final void equals_otherBeanSameName_false() throws Exception {
+        MetaProperty<?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
+        MetaProperty<?> objectMetaPropertyOnSomeBean =
+                new ComparisonMetaProperty(
+                        AbstractMetaPropertyTest.class, "object");
+
+        assertFalse(objectMetaPropertyOnTestBean
+                .equals(objectMetaPropertyOnSomeBean));
+    }
+
+    @Test
+    public final void equals_sameBeanOtherName_false() throws Exception {
+        MetaProperty<?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
+        MetaProperty<?> otherMetaPropertyOnTestBean =
+                new ComparisonMetaProperty(TestBean.class, "somePropertyName");
+
+        assertFalse(objectMetaPropertyOnTestBean
+                .equals(otherMetaPropertyOnTestBean));
+    }
+
+    @Test
+    public final void equals_sameBeanSameName_true() throws Exception {
+        MetaProperty<?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
+        MetaProperty<?> equalMetaProperty =
+                new ComparisonMetaProperty(TestBean.class, "object");
+
+        assertTrue(objectMetaPropertyOnTestBean.equals(equalMetaProperty));
+    }
+
+    // TODO add tests for 'hashCode'
 
     /* 
      * abstract test methods --------------------------------------------------
@@ -334,5 +376,66 @@ public abstract class AbstractMetaPropertyTest {
 
     protected abstract MetaProperty<List<Double>> createDoubleListMetaProperty()
             throws Exception;
+
+    /* 
+     * inner classes ----------------------------------------------------------
+     */
+
+    private static class ComparisonMetaProperty implements MetaProperty<Void> {
+
+        private final Class<?> declaringType;
+        private final String name;
+
+        public ComparisonMetaProperty(Class<?> declaringType, String name) {
+            this.declaringType = declaringType;
+            this.name = name;
+        }
+
+        @Override
+        public MetaBean metaBean() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String name() {
+            return name;
+        }
+
+        @Override
+        public Class<Void> propertyType() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Class<?> declaringType() {
+            return declaringType;
+        }
+
+        @Override
+        public Stream<Annotation> annotations() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isBuildable() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isMutable() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Void get(Object bean) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void set(Object bean, Object value) {
+            throw new UnsupportedOperationException();
+        }
+
+    }
 
 }
