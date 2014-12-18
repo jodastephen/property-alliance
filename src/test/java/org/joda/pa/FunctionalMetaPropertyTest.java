@@ -82,7 +82,7 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
         Function<TestBean, Integer> getValue = TestBean::getPrimitiveInteger;
         BiConsumer<TestBean, Integer> setValue = TestBean::setPrimitiveInteger;
         return createMetaProperty(
-                null, "primitiveInteger", Integer.class,
+                null, "primitiveInteger", int.class,
                 getValue, setValue, null);
     }
 
