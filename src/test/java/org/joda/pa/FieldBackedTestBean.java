@@ -34,11 +34,13 @@ final class FieldBackedTestBean implements TestBean {
     }
 
     @Override
+    @AnyAnnotation
     public String getString() {
         return string;
     }
 
     @Override
+    @AnyAnnotation
     public void setString(String string) {
         this.string = string;
     }
@@ -54,11 +56,13 @@ final class FieldBackedTestBean implements TestBean {
     }
 
     @Override
+    @GetAnnotation
     public Integer getInteger() {
         return integer;
     }
 
     @Override
+    @SetAnnotation
     public void setInteger(Integer integer) {
         this.integer = integer;
     }
