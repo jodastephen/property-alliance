@@ -104,36 +104,50 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
 
     @Override
     protected MetaProperty<Object> createObjectMetaProperty() {
-        return createObjectMetaProperty(null, "object");
+        return createMetaProperty(
+                "object", Object.class,
+                TestBean::getObject, TestBean::setObject);
     }
 
     @Override
     protected MetaProperty<Object> createObjectMetaPropertyWithMetaBean(
             MetaBean metaBean) {
-        return createObjectMetaProperty(metaBean, "object");
+        return createMetaProperty(
+                metaBean, "object", Object.class,
+                TestBean::getObject, TestBean::setObject, null);
     }
 
     @Override
     protected MetaProperty<Object> createObjectMetaPropertyWithName(String name) {
-        return createObjectMetaProperty(null, name);
+        return createMetaProperty(
+                name, Object.class, TestBean::getObject, TestBean::setObject);
     }
 
     @Override
     protected MetaProperty<Object> createReadOnlyObjectMetaProperty() {
         return createMetaProperty(
-                null, "object", Object.class, TestBean::getObject, null, null);
+                "object", Object.class, TestBean::getObject, null);
     }
 
     @Override
     protected MetaProperty<Object> createWriteOnlyObjectMetaProperty() {
         return createMetaProperty(
-                null, "object", Object.class, null, TestBean::setObject, null);
+                "object", Object.class, null, TestBean::setObject);
     }
 
-    private static MetaProperty<Object> createObjectMetaProperty(
-            MetaBean metaBean, String name) {
+    @Override
+    protected MetaProperty<Object> createDerivedObjectMetaProperty()
+            throws Exception {
         return createMetaProperty(
-                metaBean, name, Object.class,
+                null, "object", Object.class, true, true,
+                TestBean::getObject, TestBean::setObject, null);
+    }
+
+    @Override
+    protected MetaProperty<Object> createNotBuildableObjectMetaProperty()
+            throws Exception {
+        return createMetaProperty(
+                null, "object", Object.class, false, false,
                 TestBean::getObject, TestBean::setObject, null);
     }
 
@@ -190,8 +204,8 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
         Function<TestBean, Integer> getValue = TestBean::getPrimitiveInteger;
         BiConsumer<TestBean, Integer> setValue = TestBean::setPrimitiveInteger;
         return createMetaProperty(
-                null, "primitiveInteger", int.class,
-                getValue, setValue, null);
+                "primitiveInteger", int.class,
+                getValue, setValue);
     }
 
     @Override
@@ -212,12 +226,30 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         // TODO is there a nicer way to do this?
         Class<List<Double>> typeToken = ((Class) List.class);
+        return createMetaProperty("doubleList", typeToken, getValue, setValue);
+    }
+
+    private static <P> MetaProperty<P> createMetaProperty(
+            String name, Class<P> typeToken,
+            Function<TestBean, P> getValue, BiConsumer<TestBean, P> setValue) {
+
         return createMetaProperty(
-                null, "doubleList", typeToken, getValue, setValue, null);
+                null, name, typeToken, getValue, setValue, null);
     }
 
     private static <P> MetaProperty<P> createMetaProperty(
             MetaBean metaBean, String name, Class<P> typeToken,
+            Function<TestBean, P> getValue, BiConsumer<TestBean, P> setValue,
+            Supplier<Stream<Annotation>> annotations) {
+
+        return createMetaProperty(
+                metaBean, name, typeToken, false, true,
+                getValue, setValue, annotations);
+    }
+
+    private static <P> MetaProperty<P> createMetaProperty(
+            MetaBean metaBean, String name, Class<P> typeToken,
+            boolean derived, boolean buildable,
             Function<TestBean, P> getValue, BiConsumer<TestBean, P> setValue,
             Supplier<Stream<Annotation>> annotations) {
 
@@ -240,7 +272,7 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
         }
 
         return new FunctionalMetaProperty<>(
-                notNullMetaBean, name, typeToken, true, true,
+                notNullMetaBean, name, typeToken, derived, buildable,
                 get, set, notNullAnnotations);
     }
 

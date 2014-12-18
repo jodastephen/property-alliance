@@ -59,6 +59,22 @@ abstract class AbstractFieldNameBasedMetaPropertyTest extends
     }
 
     @Override
+    protected final MetaProperty<Object> createDerivedObjectMetaProperty()
+            throws Exception {
+        return createMetaProperty(
+                null, "object", Object.class,
+                true, true, true, false, "object");
+    }
+
+    @Override
+    protected final MetaProperty<Object> createNotBuildableObjectMetaProperty()
+            throws Exception {
+        return createMetaProperty(
+                null, "object", Object.class,
+                false, false, true, false, "object");
+    }
+
+    @Override
     protected final MetaProperty<String> createStringMetaProperty()
             throws Exception {
         return createMetaProperty(null, String.class, "string");

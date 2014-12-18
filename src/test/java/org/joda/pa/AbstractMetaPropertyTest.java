@@ -142,7 +142,29 @@ public abstract class AbstractMetaPropertyTest {
 
     // boolean indicators -----------------------------------------------------
 
-    // TODO add tests for 'isDerived', 'isBuildable'
+    @Test
+    public final void isDerived_derivedProperty_true() throws Exception {
+        MetaProperty<?> metaProperty = createDerivedObjectMetaProperty();
+        assertTrue(metaProperty.isDerived());
+    }
+
+    @Test
+    public final void isDerived_notDerivedProperty_false() throws Exception {
+        MetaProperty<?> readOnlyMetaProperty = createObjectMetaProperty();
+        assertFalse(readOnlyMetaProperty.isDerived());
+    }
+
+    @Test
+    public final void isBuildable_buildableProperty_true() throws Exception {
+        MetaProperty<?> metaProperty = createObjectMetaProperty();
+        assertTrue(metaProperty.isBuildable());
+    }
+
+    @Test
+    public final void isBuildable_notBuildableProperty_false() throws Exception {
+        MetaProperty<?> readOnlyMetaProperty = createNotBuildableObjectMetaProperty();
+        assertFalse(readOnlyMetaProperty.isBuildable());
+    }
 
     @Test
     public final void isMutable_mutableProperty_true() throws Exception {
@@ -292,6 +314,12 @@ public abstract class AbstractMetaPropertyTest {
             throws Exception;
 
     protected abstract MetaProperty<Object> createWriteOnlyObjectMetaProperty()
+            throws Exception;
+
+    protected abstract MetaProperty<Object> createDerivedObjectMetaProperty()
+            throws Exception;
+
+    protected abstract MetaProperty<Object> createNotBuildableObjectMetaProperty()
             throws Exception;
 
     protected abstract MetaProperty<String> createStringMetaProperty()
