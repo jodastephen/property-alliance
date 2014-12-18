@@ -2,14 +2,47 @@ package org.joda.pa;
 
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.testng.Assert.assertEquals;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.stream.Stream;
+
+import org.joda.pa.TestBean.GetAnnotation;
+import org.joda.pa.TestBean.SetAnnotation;
+import org.testng.annotations.Test;
 
 /**
  * Tests the class {@link FieldMetaProperty}.
  */
+@SuppressWarnings("javadoc")
 public class MethodMetaPropertyTest extends
         AbstractFieldNameBasedMetaPropertyTest {
+
+    @Test
+    public final void annotations_propertyWithTwoAnnotations_reportsAnnotations()
+            throws Exception {
+        MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
+
+        Stream<Annotation> annotations = annotatedMetaProperty.annotations();
+
+        // report exactly two annotations
+        assertEquals(annotations.count(), 2);
+
+        // report annotations of the correct type
+        long annotationsOnGet = annotatedMetaProperty
+                .annotations()
+                .filter(GetAnnotation.class::isInstance)
+                .count();
+        assertEquals(annotationsOnGet, 1);
+        long annotationsOnSet = annotatedMetaProperty
+                .annotations()
+                .filter(SetAnnotation.class::isInstance)
+                .count();
+        assertEquals(annotationsOnSet, 1);
+    }
+
+    // implementation of 'AbstractFieldNameBasedMetaPropertyTest' -------------
 
     @Override
     protected <P> MetaProperty<P> createMetaProperty(
