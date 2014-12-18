@@ -18,7 +18,7 @@ class MethodMetaProperty<P> extends AbstractMetaProperty<P> {
 
     protected MethodMetaProperty(
             MetaBean metaBean, String name, Class<P> propertyTypeToken,
-            boolean buildable, boolean derived,
+            boolean derived, boolean buildable,
             Method getValue, Method setValue) {
 
         super(metaBean, name, propertyTypeToken,
