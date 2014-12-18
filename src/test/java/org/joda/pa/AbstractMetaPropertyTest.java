@@ -1,11 +1,11 @@
 package org.joda.pa;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertSame;
+import static org.testng.Assert.assertTrue;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.joda.pa.TestBean.AnyAnnotation;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 /**
  * Abstract superclass to tests of {@link MetaProperty} implementations.
@@ -140,14 +140,14 @@ public abstract class AbstractMetaPropertyTest {
         assertSame(value, stringMetaProperty.get(bean));
     }
 
-    @Test(expected = ClassCastException.class)
+    @Test(expectedExceptions = ClassCastException.class)
     public final void get_incorrectBeanType_ClassCastException()
             throws Exception {
         MetaProperty<?> metaProperty = createObjectMetaProperty();
         metaProperty.get("this is no bean");
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expectedExceptions = UnsupportedOperationException.class)
     public final void get_writeOnlyMetaProperty_UnsupportedOperationException()
             throws Exception {
         MetaProperty<?> readOnlyMetaProperty = createWriteOnlyObjectMetaProperty();
@@ -180,14 +180,14 @@ public abstract class AbstractMetaPropertyTest {
         assertSame(doubleList, bean.getDoubleList());
     }
 
-    @Test(expected = ClassCastException.class)
+    @Test(expectedExceptions = ClassCastException.class)
     public final void set_incorrectBeanType_ClassCastException()
             throws Exception {
         MetaProperty<?> metaProperty = createObjectMetaProperty();
         metaProperty.set("this is no bean", null);
     }
 
-    @Test(expected = ClassCastException.class)
+    @Test(expectedExceptions = ClassCastException.class)
     public final void set_incorrectValueType_ClassCastException()
             throws Exception {
         MetaProperty<Integer> integerMetaProperty = createIntegerMetaProperty();
@@ -195,7 +195,7 @@ public abstract class AbstractMetaPropertyTest {
         integerMetaProperty.set(bean, "this is no integer");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public final void set_rejectedValue_RuntimeException() throws Exception {
         MetaProperty<Integer> primitiveIntegerMetaProperty =
                 createPrimitiveIntegerMetaProperty();
@@ -206,7 +206,7 @@ public abstract class AbstractMetaPropertyTest {
         primitiveIntegerMetaProperty.set(bean, rejectedValue);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expectedExceptions = UnsupportedOperationException.class)
     public final void set_readOnlyMetaProperty_UnsupportedOperationException()
             throws Exception {
         MetaProperty<?> readOnlyMetaProperty = createReadOnlyObjectMetaProperty();

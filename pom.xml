@@ -280,9 +280,9 @@
   </prerequisites>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -331,7 +331,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- Dependency version numbers -->
-    <junit.version>4.12</junit.version>
+    <testng.version>6.8.8</testng.version>
     <mockito-all.version>1.10.8</mockito-all.version>
   </properties>
 </project>
