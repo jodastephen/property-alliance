@@ -14,9 +14,9 @@ final class FieldBackedTestBean implements TestBean {
     @AnyAnnotation
     private String string;
 
-    @FieldAnnotation
     private int primitiveInteger;
 
+    @FieldAnnotation
     private Integer integer;
 
     private List<Double> doubleList;
