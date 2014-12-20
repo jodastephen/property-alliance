@@ -19,12 +19,30 @@ JavaBeans v1.0 spec in some way, we'd love to have it listed here.
 * Can generate bytecode to avoid reflection. See [afterburner](https://github.com/FasterXML/jackson-module-afterburner).
 * Has "property missing" support.
 
+[Genson](http://owlike.github.io/genson/)
+
+* Uses getter/setter pattern and no-args constructors.
+* Also uses fields.
+* Non public getters/setters/fields can be used.
+* Can use constructors, handling immutable objects, either by annotation or bytecode analysis. [source](https://github.com/owlike/genson/blob/master/genson/src/main/java/com/owlike/genson/reflect/BeanCreator.java)
+* Can use factories, handling immutable objects, by annotation.
+* Serialize/deserialize to/from bean [source](https://github.com/owlike/genson/blob/master/genson/src/main/java/com/owlike/genson/reflect/BeanDescriptor.java).
+* Property [mutator](https://github.com/owlike/genson/blob/master/genson/src/main/java/com/owlike/genson/reflect/PropertyMutator.java)
+and [accessor](https://github.com/owlike/genson/blob/master/genson/src/main/java/com/owlike/genson/reflect/PropertyAccessor.java).
+* [Property](https://github.com/owlike/genson/blob/master/genson/src/main/java/com/owlike/genson/reflect/BeanProperty.java).
+
+JSR-353
+
+* Does not appear to use JavaBeans.
+
 JAXB
 
 * General purpose XML serialization.
 * Getter/setter pattern.
 * Direct field access can be used.
 * TODO
+
+[JIBX](http://jibx.sourceforge.net/)
 
 
 ## Database tools
@@ -36,7 +54,7 @@ Hibernate - TODO
 
 [MapStruct](http://mapstruct.org)
 
-* General purpose bean mapper, operating by annotation processor.
+* General purpose mapper, operating by annotation processor.
 * Uses getter/setter pattern and no-args constructors.
 * Can use getters for collections as effective setters.
 * Can use adders for collections as effective setters.
@@ -45,7 +63,7 @@ Hibernate - TODO
 
 [Orika](http://orika-mapper.github.io/orika-docs/)
 
-* General purpose bean mapper, operating by Javassist.
+* General purpose mapper, operating by Javassist.
 * Uses java.beans Introspector, with additional handling. [Code](https://code.google.com/p/orika/source/browse/trunk/core/src/main/java/ma/glasnost/orika/property/IntrospectorPropertyResolver.java?r=505).
 * Has own [Property](https://code.google.com/p/orika/source/browse/trunk/core/src/main/java/ma/glasnost/orika/metadata/Property.java?r=505) class.
 * Uses getter/setter pattern.
@@ -56,7 +74,7 @@ Hibernate - TODO
 
 [Dozer](http://dozer.sourceforge.net/)
 
-* General purpose bean mapper, operating by Commons BeanUtils.
+* General purpose mapper, operating by Commons BeanUtils.
 * Eclipse GUI for editing XML based mapping files, annotation/Java config too.
 * Uses getter/setter pattern and no-args constructors.
 * Support for factories, details [unclear](http://dozer.sourceforge.net/documentation/customCreateMethod.html).
@@ -67,13 +85,13 @@ Hibernate - TODO
 
 [JMapper](https://code.google.com/p/jmapper-framework/)
 
-* General purpose bean mapper, operating by Javassist.
+* General purpose mapper, operating by Javassist.
 * Uses getter/setter pattern and no-args constructors.
 * Unable to find source code for introspecting.
 
 [EZMorph](http://ezmorph.sourceforge.net/)
 
-* General purpose bean mapper, operating by Commons BeanUtils.
+* General purpose mapper, operating by Commons BeanUtils.
 * Handles DynaBeans.
 * Uses getter/setter pattern and no-args constructors.
 * Little documentation, last release 2008.
@@ -81,7 +99,7 @@ Hibernate - TODO
 
 [Morph](http://morph.sourceforge.net/)
 
-* General purpose bean mapper, with abstraction of bean access.
+* General purpose mapper, with abstraction of bean access.
 * Uses getter/setter pattern and no-args constructors, and other approaches.
 * Has a [BeanReflector](http://morph.sourceforge.net/xref/net/sf/morph/reflect/BeanReflector.html)
 * Also has a [ContainerReflector](http://morph.sourceforge.net/xref/net/sf/morph/reflect/ContainerReflector.html)
@@ -93,7 +111,7 @@ Hibernate - TODO
 
 [ModelMapper](http://modelmapper.org/)
 
-* General purpose bean mapper.
+* General purpose mapper.
 * Uses getter/setter pattern and no-args constructors.
 * Providers allow for other object creation approaches, but still needs setters.
 * Can match non-public methods and fields.
@@ -102,9 +120,37 @@ Hibernate - TODO
 
 [Transmorph](https://github.com/cchabanois/transmorph)
 
+* General purpose mapper, operating by reflection.
+* Uses getter/setter pattern and no-args constructors. [source](https://github.com/cchabanois/transmorph/blob/master/src/main/java/net/entropysoft/transmorph/converters/beans/BeanToBean.java)
+* Simulates java.beans [introspector](https://github.com/cchabanois/transmorph/blob/master/src/main/java/net/entropysoft/transmorph/utils/BeanUtils.java)
+* Can map bean to/from Map.
+* Little documentation, last release 2013.
+
 [OTOM](https://java.net/projects/otom)
 
+* General purpose mapper.
+* GUI tool that generates Java source code.
+* Uses getter/setter pattern and no-args constructors.
+* Uses java.beans [Introspector](https://java.net/projects/otom/sources/svn/content/trunk/src/java/otom/mapping/MappingUtils.java?rev=42).
+* Little documentation, last commit 2005.
+
 [Smooks](http://www.smooks.org/mediawiki/index.php?title=Main_Page)
+
+* General purpose data event based data transformation.
+* Uses getter/setter pattern and no-args constructors.
+* Support for factory methods to create objects.
+* Some support for setting fields directly.
+
+
+## Templating tools
+
+[Freemarker](http://freemarker.org/)
+
+* Abstracts data access, one implementation is based on JavaBeans.
+* Uses getters.
+* Uses java.beans Introspector. [source](https://github.com/freemarker/freemarker/blob/2.3-gae/src/main/java/freemarker/ext/beans/ClassIntrospector.java#L304)
+
+Velocity
 
 
 ## Utilities
@@ -114,6 +160,10 @@ Hibernate - TODO
 [Commons BeanUtils](http://commons.apache.org/proper/commons-beanutils/)
 
 [JUEL](http://juel.sourceforge.net/)
+
+[MVEL](http://mvel.codehaus.org/)
+
+OGNL
 
 
 ## Programming languages
