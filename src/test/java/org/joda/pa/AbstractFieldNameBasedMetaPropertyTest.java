@@ -96,7 +96,6 @@ abstract class AbstractFieldNameBasedMetaPropertyTest extends
     protected final MetaProperty<List<Double>> createDoubleListMetaProperty()
             throws Exception {
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        // TODO is there a nicer way to do this?
         Class<List<Double>> typeToken = ((Class) List.class);
         return createMetaProperty(null, typeToken, "doubleList");
     }

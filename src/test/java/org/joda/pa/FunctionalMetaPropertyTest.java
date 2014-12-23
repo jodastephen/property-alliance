@@ -224,7 +224,6 @@ public class FunctionalMetaPropertyTest extends AbstractMetaPropertyTest {
         Function<TestBean, List<Double>> getValue = TestBean::getDoubleList;
         BiConsumer<TestBean, List<Double>> setValue = TestBean::setDoubleList;
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        // TODO is there a nicer way to do this?
         Class<List<Double>> typeToken = ((Class) List.class);
         return createMetaProperty("doubleList", typeToken, getValue, setValue);
     }
