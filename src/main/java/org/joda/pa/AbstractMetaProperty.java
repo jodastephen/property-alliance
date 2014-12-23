@@ -120,8 +120,15 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
     }
 
     private P ensureValueHasCorrectType(Object value) {
-        // TODO do we want a customized exception message?
-        return propertyTypeToken.cast(value);
+        try {
+            return propertyTypeToken.cast(value);
+        } catch (ClassCastException ex) {
+            String message = "The specified value " + value + " is of type '"
+                    + value.getClass() + "' which is not assignment compatible"
+                    + " with this meta-property's content type '"
+                    + propertyTypeToken + "'.";
+            throw new ClassCastException(message);
+        }
     }
 
     /**
