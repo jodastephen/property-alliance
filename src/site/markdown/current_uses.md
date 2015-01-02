@@ -44,10 +44,23 @@ JAXB
 
 [JIBX](http://jibx.sourceforge.net/)
 
+* TODO
+
 
 ## Database tools
 
-Hibernate - TODO
+Hibernate
+* Tool to generate [JPA metamodel](http://hibernate.org/orm/tooling/)
+* TODO
+
+[UJORM](http://ujorm.org/)
+
+* [Key-Value](http://ujorm.org/sample/key-value.html)
+* TODO
+
+JPA
+
+DevWorks on [JPA metamodel](http://www.ibm.com/developerworks/java/library/j-typesafejpa/)
 
 
 ## Bean mapping tools
@@ -142,6 +155,21 @@ Hibernate - TODO
 * Some support for setting fields directly.
 
 
+## Web GUIs
+
+[Apache ISIS](http://isis.apache.org/index.html)
+
+* Beans to web GUI (naked objects)
+* Supports standard [getters and setters](http://isis.apache.org/how-tos/how-to-01-030-How-to-add-a-property-to-a-domain-entity.html)
+* Supports [collections and lists nut not maps](http://isis.apache.org/how-tos/how-to-01-050-How-to-add-a-collection-to-a-domain-entity.html)
+* Uses annotations to add some additional control of what is exposed
+
+[FXForm2](https://github.com/dooApp/FXForm2)
+
+* Beans to JavaFX GUI
+* Relies on [reflection of Field instances](https://github.com/dooApp/FXForm2/blob/master/core/src/main/java/com/dooapp/fxform/reflection/ReflectionUtils.java)
+
+
 ## Templating tools
 
 [Freemarker](http://freemarker.org/)
@@ -151,6 +179,8 @@ Hibernate - TODO
 * Uses java.beans Introspector. [source](https://github.com/freemarker/freemarker/blob/2.3-gae/src/main/java/freemarker/ext/beans/ClassIntrospector.java#L304)
 
 Velocity
+
+* TODO
 
 
 ## Utilities
@@ -165,7 +195,27 @@ Velocity
 
 OGNL
 
+Bean validation
+
+* Solution must work with bean validation
+
+[JBeans](http://jbeans.sourceforge.net/index.html)
+
+* Package to replace `java.beans`
+* Includes type 1 property
+* [Javadoc](http://jbeans.sourceforge.net/javadoc/index.html)
+
 
 ## Programming languages
 
+Java
+
+* [Bug 5043025](http://bugs.java.com/bugdatabase/view_bug.do?bug_id=5043025), method/field literals
+
 Groovy - TODO
+
+[Gosu](http://gosu-lang.github.io/)
+
+* [Feature literals](http://guidewiredevelopment.wordpress.com/2011/03/03/feature-literals/)
+* [Feature literals 2](http://guidewiredevelopment.wordpress.com/2011/06/05/feature-literals-enhancements-blocks-win/)
+
