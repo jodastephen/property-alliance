@@ -24,10 +24,19 @@ Javalobby
 
 * [JGoodies Binding](http://www.javalobby.org/java/forums/t17672),
 Mar 2005,
-not especially relevant, but [code](https://java.net/projects/binding) still around
+  * not especially relevant, but [code](https://java.net/projects/binding) still around
 * [Main discussion based on Ideas from Danny Coward](http://www.javalobby.org/java/forums/t88090.html?start=0),
-Jan 2007, 136 comments,
-TODO
+Jan 2007, 136 comments, IMPORTANT,
+immediate expansion to read-only, write-only, bound.
+  * Danny Coward: "simplicity, readability and productivity are always key considerations to look at",
+  * Ray Cromwell: "The issue isn't just typing the boilerplate, it's *reading it*.",
+  * Ray Cromwell: why not get IDEs to do job rather than language change,
+  * Marc Stock: getters/setters "should be like the default constructor...it's just there even though you can't see it",
+  * Stephen Colebourne: misses opportunity of fixing stringly-typed property names in frameworks,
+
+
+
+
 * [Why Java Properties are BAD, ugly and uncomfortable](http://www.javalobby.org/java/forums/t90756.html),
 Feb 2007, 96 comments,
 TODO
@@ -36,41 +45,41 @@ Feb 2007, 59 comments,
 TODO
 * [Beans Binding (JSR 295) & Properties on JDK7 ](http://www.javalobby.org/java/forums/t101998.html),
 Sep 2007, 14 comments,
-author unclear of benefits of property language feature (re paradigm shift issue),
-Richard Bair: "there will be a significant portion of properties (20%?) that will require custom code",
-lots of consideration of lines of code, conceptual shift seems hard to grasp
+  * author unclear of benefits of property language feature (re paradigm shift issue),
+  * Richard Bair: "there will be a significant portion of properties (20%?) that will require custom code",
+  * lots of consideration of lines of code, conceptual shift seems hard to grasp
 * [Bean-dependent or Bean-independent Properties?](http://www.javalobby.org/java/forums/t102115.html),
 Oct 2007, 50 comments,
-various discussions and confusions, little about syntax, lots about bean-properties project,
-reminder of importance of collections to property querying
+  * various discussions and confusions, little about syntax, lots about bean-properties project,
+  * reminder of importance of collections to property querying
 * [Typesafe property literals](http://java.dzone.com/articles/typesafe-property-literals),
 May 2014,
-"We found that once you have these literals, they just turn out to be useful in many cases.",
-uses Lombok to generate
+  * "We found that once you have these literals, they just turn out to be useful in many cases.",
+  * uses Lombok to generate
 
 
 JavaPosse
 
 * [Discussion 1](https://groups.google.com/forum/#!topic/javaposse/gA_YdNk2bfI) and
 [Discussion 2(https://groups.google.com/forum/#!topic/javaposse/pJqu8Z0O_SE),
-neither that interesting
+  * neither that interesting
 * [Episode 145](http://javaposse.com/java_posse_145_newscast_for_oct_4th_2007),
 Oct 2007,
-Joe Nuxoll defines language level property as (based on Pascal, C#, C++) statically typed member (like field)
-with behaviour (ability to control getter/setter),
-can have non-public properties but generally public,
-JavaBeans is a pattern/convention,
-language-level property would be part of reflection,
-write components not classes (properties and events, go together),
-can be virtual/calculated,
-property is encapsulated, hides internals of storage of the value.
-Suggests beans-binding misusing word "properties", discusses how binding works.
-Two competing binding APIs in Sun (beans-binding and data-provider, ended up in NetBeans).
-Claims component-based is a paradigm shift from regular object-oriented,
-meta-data critical to enable tooling.
-Emphasises can't really do properties without events and vice versa.
-Single location for Javadoc and annotations.
-Once had Javadoc version that merged getters and setters into properties section.
+  * Joe Nuxoll defines language level property as (based on Pascal, C#, C++) statically typed member (like field)
+  * with behaviour (ability to control getter/setter)
+  * can have non-public properties but generally public
+  * JavaBeans is a pattern/convention
+  * language-level property would be part of reflection
+  * write components not classes (properties and events, go together)
+  * can be virtual/calculated
+  * property is encapsulated, hides internals of storage of the value
+  * Suggests beans-binding misusing word "properties", discusses how binding works
+  * Two competing binding APIs in Sun (beans-binding and data-provider, ended up in NetBeans)
+  * Claims component-based is a paradigm shift from regular object-oriented
+  * meta-data critical to enable tooling
+  * Emphasises can't really do properties without events and vice versa
+  * Single location for Javadoc and annotations
+  * Once had Javadoc version that merged getters and setters into properties section
 
 
 Artima
@@ -315,6 +324,44 @@ proposal doc not currently accessible,
 access by `String s = person#surname` and `person#surname = "Foo"`,
 declare by `public property Property<Customer,String> city = new BasicPropertyBuilder(property("")).nonNull().observable(##propertyChangeSupport).build();`
 or maybe `public Long #id`.
+* From [Google Doc proposal](https://docs.google.com/document/d/1tJGcDSIpii5zODEngAWLCw9uPwdDNUADI4HWL3v-xWc/edit?usp=sharing),
+"Properties are per-type, not per-instance. Anonymous classes are used for efficient property access. Properties are extensible using the decorator pattern",
+propose to generate field and inner classes directly accessing field,
+open question on whether interfaces expose properties.
+
+    // Bean-independent Properties, direct access:
+    Customer customer = ...
+    String city = customer#city;
+    customer#city = "San Francisco";
+
+    // Bean-independent Properties, access via a Property object:
+    Customer customer = ...
+    Property<Customer,String> customerCityProperty = Customer##city;
+    String city = customerCityProperty.get(customer);
+    customerCityProperty.set(customer, "San Francisco");
+
+    // declare (getter/setter for legacy and implementing interface)
+    public Property<Customer,String> ##city = property("");
+    public String getCity() { return #city; }
+    public void setCity(String city) { #city = city; }
+
+    // compilation (before and after
+    String city = customer#city
+    String city = Customer.$p_city.get(customer)
+
+    // compilation (before and after
+    Property<Customer,String> customerCityProperty = Customer##city
+    Property<Customer,String> customerCityProperty = Customer.$p_city
+    
+    // interface
+    public interface Property<B,V> {
+      V get(B bean);
+      V get(B bean, V defaultValue);
+      V set(B bean, V value);
+      String getName();
+      Type<B> getDeclaringType();  // maybe?
+      Type<V> getValueType();  // maybe?
+    } 
 
 
 Richard Bair
