@@ -2,7 +2,7 @@
 <project name="Property-Alliance">
   <publishDate position="bottom" format="yyyy-MM-dd"/>
   <version position="bottom"/>
-  <!-- googleAnalyticsAccountId>UA-1425975-2</googleAnalyticsAccountId-->
+  <googleAnalyticsAccountId>UA-1425975-7</googleAnalyticsAccountId>
 
   <skin>
     <groupId>lt.velykis.maven.skins</groupId>
