@@ -54,11 +54,11 @@ Observable Collections
 
 `Property<T> extends ReadOnlyProperty<T>, WritableValue<T>`
 
-* bind(ObservableValue<? extends T>)
-* unbind()
-* isBound()
-* bindBidirectional(Property<T>)
-* unbindBidirectional(Property<T>)
+* `bind(ObservableValue<? extends T>)`
+* `unbind()`
+* `isBound()`
+* `bindBidirectional(Property<T>)`
+* `unbindBidirectional(Property<T>)`
 * get and set allows full binding capability
 
 
@@ -76,17 +76,17 @@ Observable Collections
 
 `WritableValue<T>`
 
-* getValue()
-* setValue(T value)
+* `getValue()`
+* `setValue(T value)`
 * provides getter and setter independent of main property framework
 * subtypes for boolean/numbers/object
 
 
 `StyleableProperty<T> extends WritableValue<T>`
 
-* applyStyle(StyleOrigin, T)
-* getStyleOrigin()
-* getCssMetaData()
+* `applyStyle(StyleOrigin, T)`
+* `getStyleOrigin()`
+* `getCssMetaData()`
 * allows CSS to interact with properties
 
 
