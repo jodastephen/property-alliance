@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Property-Alliance">
+  <publishDate position="bottom" format="yyyy-MM-dd"/>
+  <version position="bottom"/>
+  <!-- googleAnalyticsAccountId>UA-1425975-2</googleAnalyticsAccountId-->
+
+  <skin>
+    <groupId>lt.velykis.maven.skins</groupId>
+    <artifactId>reflow-maven-skin</artifactId>
+    <version>1.1.1</version>
+  </skin>
+
+  <custom>
+    <reflowSkin>
+      <smoothScroll>false</smoothScroll>
+      <highlightJs>true</highlightJs>
+      <highlightJsTheme>github</highlightJsTheme>
+      <imgLightbox>false</imgLightbox>
+      <theme>bootswatch-cosmo</theme>
+      <brand>
+        <name>Property-Alliance</name>
+        <href>index.html</href>
+      </brand>
+      <topNav>Documentation|Development</topNav>
+      <bottomNav>
+        <column>Documentation</column>
+        <column>Development</column>
+        <column>Reports</column>
+      </bottomNav>
+      <bottomDescription><![CDATA[
+        A bean and properties meta-model for Java
+      ]]></bottomDescription>
+      <toc>false</toc>
+      <breadcrumbs>false</breadcrumbs>
+      <markPageHeader>false</markPageHeader>
+      <pages>
+        <index>
+          <sections>
+            <body />
+          </sections>
+          <shortTitle>Home</shortTitle>
+        </index>
+        <source-repository>
+          <highlightJs>false</highlightJs>
+        </source-repository>
+        <issue-tracking>
+          <highlightJs>false</highlightJs>
+        </issue-tracking>
+        <license>
+          <highlightJs>false</highlightJs>
+        </license>
+      </pages>
+    </reflowSkin>
+  </custom>
+
+  <body>
+    <head>
+      <link href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet"/>
+      <link rel="author" href="https://plus.google.com/113137868744510231215"/>
+    </head>
+
+    <menu name="Documentation">
+      <item name="Home" href="index.html"/>
+      <item name="SJSU CS Wiki" href="wiki_home.html"/>
+      <item name="Javadoc" href="apidocs/index.html"/>
+      <item name="License" href="license.html"/>
+    </menu>
+
+    <menu name="Development">
+      <item name="GitHub" href="https://github.com/jodastephen/property-alliance"/>
+      <item name="Bugs/Issues" href="https://github.com/jodastephen/property-alliance/issues"/>
+    </menu>
+
+    <menu name="Reports" ref="reports"/>
+  </body>
+</project>
