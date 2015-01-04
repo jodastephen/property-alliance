@@ -33,6 +33,10 @@
     </developer>
   </developers>
   <contributors>
+    <contributor>
+      <name>Nicolai Parlog</name>
+      <url>https://github.com/nicolaiparlog</url>
+    </contributor>
   </contributors>
 
   <!-- ==================================================================== -->
@@ -321,6 +325,18 @@
     <maven>3.0.4</maven>
   </prerequisites>
   <dependencies>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>${mockito-all.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <!-- ==================================================================== -->
@@ -416,5 +432,8 @@
     <!-- Other properties -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- Dependency version numbers -->
+    <testng.version>6.8.8</testng.version>
+    <mockito-all.version>1.10.8</mockito-all.version>
   </properties>
 </project>
