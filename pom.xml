@@ -33,6 +33,10 @@
     </developer>
   </developers>
   <contributors>
+    <contributor>
+      <name>Nicolai Parlog</name>
+      <url>https://github.com/nicolaiparlog</url>
+    </contributor>
   </contributors>
 
   <!-- ==================================================================== -->
