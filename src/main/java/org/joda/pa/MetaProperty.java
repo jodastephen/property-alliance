@@ -214,7 +214,8 @@ public interface MetaProperty<P> {
      * Checks if this meta-property equals another.
      * <p>
      * Two properties are equal if they provide access to the same value.
-     * This is typically accomplished by comparing the property name and declaring class.
+     * This is typically accomplished by comparing the {@link #name() property name}
+     * and the {@link #declaringType() bean type}.
      * The value of the property must not be used.
      * 
      * @param obj  the other meta-property, null returns false
