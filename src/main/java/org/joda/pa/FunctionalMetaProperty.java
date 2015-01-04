@@ -51,6 +51,7 @@ class FunctionalMetaProperty<P> extends AbstractMetaProperty<P> {
         this.getAnnotations = getAnnotations;
     }
 
+    //-----------------------------------------------------------------------
     private static boolean isReadable(Function<?, ?> getValue) {
         return getValue != null;
     }
@@ -59,6 +60,7 @@ class FunctionalMetaProperty<P> extends AbstractMetaProperty<P> {
         return setValue != null;
     }
 
+    //-----------------------------------------------------------------------
     @Override
     public Stream<Annotation> annotations() {
         return getAnnotations.get();

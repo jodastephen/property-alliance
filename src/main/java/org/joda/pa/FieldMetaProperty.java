@@ -46,10 +46,12 @@ class FieldMetaProperty<P> extends AbstractMetaProperty<P> {
         makeAccessible(backingField);
     }
 
+    //-----------------------------------------------------------------------
     private static void makeAccessible(Field backingField) {
         backingField.setAccessible(true);
     }
 
+    //-----------------------------------------------------------------------
     @Override
     public Stream<Annotation> annotations() {
         return Stream.of(backingField.getAnnotations());

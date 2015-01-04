@@ -44,6 +44,7 @@ class MethodMetaProperty<P> extends AbstractMetaProperty<P> {
         makeAccessible(getValue, setValue);
     }
 
+    //-----------------------------------------------------------------------
     private static boolean isReadable(Method getValue) {
         return getValue != null;
     }
@@ -52,6 +53,7 @@ class MethodMetaProperty<P> extends AbstractMetaProperty<P> {
         return setValue != null;
     }
 
+    //-----------------------------------------------------------------------
     private static void makeAccessible(Method getValue, Method setValue) {
         if (getValue != null) {
             getValue.setAccessible(true);

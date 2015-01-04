@@ -50,8 +50,7 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
         this.derived = derived;
     }
 
-    // (partial) implementation of 'MetaProperty' -----------------------------
-
+    //-----------------------------------------------------------------------
     @Override
     public final MetaBean metaBean() {
         return metaBean;
@@ -154,40 +153,24 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
      */
     protected abstract void setToBean(Object bean, P value);
 
-    // 'Object' methods -------------------------------------------------------
-
-    @Override
-    public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((metaBean == null) ? 0 : metaBean.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
+    //-----------------------------------------------------------------------
     @Override
     public final boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
+        if (obj instanceof MetaProperty) {
+            @SuppressWarnings("rawtypes")
+            MetaProperty other = (MetaProperty) obj;
+            return Objects.equals(declaringType(), other.declaringType()) &&
+                    Objects.equals(name(), other.name());
         }
-        if (!(obj instanceof MetaProperty)) {
-            return false;
-        }
+        return false;
+    }
 
-        @SuppressWarnings("rawtypes")
-        MetaProperty other = (MetaProperty) obj;
-        if (!Objects.equals(declaringType(), other.declaringType())) {
-            return false;
-        }
-        if (!Objects.equals(name(), other.name())) {
-            return false;
-        }
-
-        return true;
+    @Override
+    public final int hashCode() {
+        return Objects.hashCode(metaBean) ^ Objects.hashCode(name);
     }
 
 }
