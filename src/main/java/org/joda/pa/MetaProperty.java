@@ -181,6 +181,11 @@ public interface MetaProperty<B, P> {
      * <p>
      * For a standard Java Bean, this is equivalent to calling {@code getFoo()} on the bean.
      * Alternate implementations may perform any logic to obtain the value.
+     * <p>
+     * The argument {@code bean} is not generic (in {@code B}) because this would prevent
+     * calling {@code get} on {@code MetaProperty<?, ?>}.
+     * Since meta-properties will often be handled by frameworks, this is a common use-case
+     * which needs to be supported.
      * 
      * @param bean  the bean to query, not null
      * @return the value of the property on the specified bean, may be null
@@ -196,8 +201,8 @@ public interface MetaProperty<B, P> {
      * For a standard Java Bean, this is equivalent to calling {@code setFoo()} on the bean.
      * Alternate implementations may perform any logic to change the value.
      * <p>
-     * The argument {@code value} is not generic (in {@code P}) because this would
-     * prevent calling {@code set} on {@code MetaProperty<?>}.
+     * The arguments {@code bean} and {@code value} are not generic (in {@code B} or {@code P})
+     * because this would prevent calling {@code set} on {@code MetaProperty<?, ?>}.
      * Since meta-properties will often be handled by frameworks, this is a common use-case
      * which needs to be supported.
      * 
