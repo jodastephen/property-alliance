@@ -266,7 +266,9 @@ Velocity
 
 [MVEL](http://mvel.codehaus.org/)
 
-OGNL
+[OGNL](http://commons.apache.org/proper/commons-ognl/)
+
+* Used internally by other projects, such as [Thymeleaf](http://www.thymeleaf.org/doc/standarddialect5minutes.html)
 
 Bean validation
 
@@ -324,6 +326,8 @@ public interface Property {
   void setValue(Object arg) 
 }
 ```
+
+[Apache CXF](http://cxf.apache.org/)
 
 
 ## Programming languages
