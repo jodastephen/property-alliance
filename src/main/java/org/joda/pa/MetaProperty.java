@@ -29,9 +29,10 @@ import java.util.stream.Stream;
  * <p>
  * A {@code MetaProperty} is obtained from a {@link MetaBean}.
  * 
- * @param <P>  the type of the property content
+ * @param <B> the type associated with the meta-bean that defines this meta-property 
+ * @param <P> the type of the property content
  */
-public interface MetaProperty<P> {
+public interface MetaProperty<B, P> {
 
     /**
      * Gets the meta-bean that defines this meta-property.
@@ -40,7 +41,7 @@ public interface MetaProperty<P> {
      * 
      * @return the meta-bean, not null
      */
-    MetaBean metaBean();
+    MetaBean<B> metaBean();
 
     /**
      * Gets the property name.
@@ -66,7 +67,7 @@ public interface MetaProperty<P> {
      * 
      * @return the type declaring the property, not null
      */
-    default Class<?> declaringType() {
+    default Class<B> declaringType() {
         return metaBean().beanType();
     }
 

@@ -20,11 +20,12 @@ import java.util.Objects;
 /**
  * Abstract superclass to {@link MetaProperty} implementations.
  * 
+ * @param <B> the type associated with the meta-bean that defines this meta-property 
  * @param <P> the type of the property content
  */
-abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
+abstract class AbstractMetaProperty<B, P> implements MetaProperty<B, P> {
 
-    private final MetaBean metaBean;
+    private final MetaBean<B> metaBean;
     private final String name;
     private final Class<P> propertyTypeToken;
     private final boolean derived;
@@ -37,7 +38,7 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
      * It relies on the calling builder to do so.
      */
     protected AbstractMetaProperty(
-            MetaBean metaBean, String name, Class<P> propertyTypeToken,
+            MetaBean<B> metaBean, String name, Class<P> propertyTypeToken,
             boolean derived, boolean buildable,
             boolean readable, boolean mutable) {
 
@@ -52,7 +53,7 @@ abstract class AbstractMetaProperty<P> implements MetaProperty<P> {
 
     //-----------------------------------------------------------------------
     @Override
-    public final MetaBean metaBean() {
+    public final MetaBean<B> metaBean() {
         return metaBean;
     }
 

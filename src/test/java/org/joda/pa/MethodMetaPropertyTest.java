@@ -35,7 +35,7 @@ public class MethodMetaPropertyTest extends
     @Test
     public final void annotations_methodsWithTwoAnnotations_reportsAnnotations()
             throws Exception {
-        MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
+        MetaProperty<?, ?> annotatedMetaProperty = createIntegerMetaProperty();
 
         // report exactly two annotation
         long annotationsCount = annotatedMetaProperty
@@ -59,7 +59,7 @@ public class MethodMetaPropertyTest extends
     @Test
     public final void annotationsFilter_methodsWithTwoAnnotations_reportsAnnotation()
             throws Exception {
-        MetaProperty<?> annotatedMetaProperty = createIntegerMetaProperty();
+        MetaProperty<?, ?> annotatedMetaProperty = createIntegerMetaProperty();
 
         // report exactly one annotation on get
         long annotationsCountOnGet = annotatedMetaProperty
@@ -77,14 +77,14 @@ public class MethodMetaPropertyTest extends
     // implementation of 'AbstractFieldNameBasedMetaPropertyTest' -------------
 
     @Override
-    protected <P> MetaProperty<P> createMetaProperty(
-            MetaBean metaBean, String name, Class<P> typeToken,
+    protected <B, P> MetaProperty<B, P> createMetaProperty(
+            MetaBean<B> metaBean, String name, Class<P> typeToken,
             boolean derived, boolean buildable,
             boolean readable, boolean mutable,
             String fieldName)
             throws Exception {
 
-        MetaBean notNullMetaBean = metaBean;
+        MetaBean<B> notNullMetaBean = metaBean;
         if (notNullMetaBean == null) {
             notNullMetaBean = mock(MetaBean.class);
             doReturn(TestBean.class).when(notNullMetaBean).beanType();
