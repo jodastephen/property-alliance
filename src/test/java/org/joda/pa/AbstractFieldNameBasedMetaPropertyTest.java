@@ -36,20 +36,20 @@ abstract class AbstractFieldNameBasedMetaPropertyTest extends
     }
 
     @Override
-    protected final MetaProperty<Object> createObjectMetaProperty()
+    protected final MetaProperty<?, Object> createObjectMetaProperty()
             throws Exception {
         return createMetaProperty(null, Object.class, "object");
     }
 
     @Override
-    protected final MetaProperty<Object> createObjectMetaPropertyWithMetaBean(
-            MetaBean metaBean)
+    protected final <B> MetaProperty<B, Object> createObjectMetaPropertyWithMetaBean(
+            MetaBean<B> metaBean)
             throws Exception {
         return createMetaProperty(metaBean, Object.class, "object");
     }
 
     @Override
-    protected final MetaProperty<Object> createObjectMetaPropertyWithName(
+    protected final MetaProperty<?, Object> createObjectMetaPropertyWithName(
             String name)
             throws Exception {
         return createMetaProperty(
@@ -58,7 +58,7 @@ abstract class AbstractFieldNameBasedMetaPropertyTest extends
     }
 
     @Override
-    protected final MetaProperty<Object> createReadOnlyObjectMetaProperty()
+    protected final MetaProperty<?, Object> createReadOnlyObjectMetaProperty()
             throws Exception {
         return createMetaProperty(
                 null, "object", Object.class,
@@ -66,7 +66,7 @@ abstract class AbstractFieldNameBasedMetaPropertyTest extends
     }
 
     @Override
-    protected final MetaProperty<Object> createWriteOnlyObjectMetaProperty()
+    protected final MetaProperty<?, Object> createWriteOnlyObjectMetaProperty()
             throws Exception {
         return createMetaProperty(
                 null, "object", Object.class,
@@ -74,7 +74,7 @@ abstract class AbstractFieldNameBasedMetaPropertyTest extends
     }
 
     @Override
-    protected final MetaProperty<Object> createDerivedObjectMetaProperty()
+    protected final MetaProperty<?, Object> createDerivedObjectMetaProperty()
             throws Exception {
         return createMetaProperty(
                 null, "object", Object.class,
@@ -82,7 +82,7 @@ abstract class AbstractFieldNameBasedMetaPropertyTest extends
     }
 
     @Override
-    protected final MetaProperty<Object> createNotBuildableObjectMetaProperty()
+    protected final MetaProperty<?, Object> createNotBuildableObjectMetaProperty()
             throws Exception {
         return createMetaProperty(
                 null, "object", Object.class,
@@ -90,33 +90,33 @@ abstract class AbstractFieldNameBasedMetaPropertyTest extends
     }
 
     @Override
-    protected final MetaProperty<String> createStringMetaProperty()
+    protected final MetaProperty<?, String> createStringMetaProperty()
             throws Exception {
         return createMetaProperty(null, String.class, "string");
     }
 
     @Override
-    protected final MetaProperty<Integer> createPrimitiveIntegerMetaProperty()
+    protected final MetaProperty<?, Integer> createPrimitiveIntegerMetaProperty()
             throws Exception {
         return createMetaProperty(null, int.class, "primitiveInteger");
     }
 
     @Override
-    protected final MetaProperty<Integer> createIntegerMetaProperty()
+    protected final MetaProperty<?, Integer> createIntegerMetaProperty()
             throws Exception {
         return createMetaProperty(null, Integer.class, "integer");
     }
 
     @Override
-    protected final MetaProperty<List<Double>> createDoubleListMetaProperty()
+    protected final MetaProperty<?, List<Double>> createDoubleListMetaProperty()
             throws Exception {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         Class<List<Double>> typeToken = ((Class) List.class);
         return createMetaProperty(null, typeToken, "doubleList");
     }
 
-    private <P> MetaProperty<P> createMetaProperty(
-            MetaBean metaBean, Class<P> typeToken, String fieldName)
+    private <B, P> MetaProperty<B, P> createMetaProperty(
+            MetaBean<B> metaBean, Class<P> typeToken, String fieldName)
             throws Exception {
 
         return createMetaProperty(
@@ -124,8 +124,8 @@ abstract class AbstractFieldNameBasedMetaPropertyTest extends
                 fieldName);
     }
 
-    protected abstract <P> MetaProperty<P> createMetaProperty(
-            MetaBean metaBean, String name, Class<P> typeToken,
+    protected abstract <B, P> MetaProperty<B, P> createMetaProperty(
+            MetaBean<B> metaBean, String name, Class<P> typeToken,
             boolean derived, boolean buildable,
             boolean readable, boolean mutable,
             String fieldName)

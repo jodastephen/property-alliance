@@ -45,15 +45,15 @@ public abstract class AbstractMetaPropertyTest {
     @Test
     public final void metaBean_compareWithConstructionArgument_same()
             throws Exception {
-        MetaBean metaBean = mock(MetaBean.class);
-        MetaProperty<?> metaProperty = createObjectMetaPropertyWithMetaBean(metaBean);
+        MetaBean<Object> metaBean = mock(MetaBean.class);
+        MetaProperty<?, ?> metaProperty = createObjectMetaPropertyWithMetaBean(metaBean);
         assertSame(metaProperty.metaBean(), metaBean);
     }
 
     @Test
     public final void declaringClass_compareWithBeanClass_same()
             throws Exception {
-        MetaProperty<?> metaProperty = createObjectMetaProperty();
+        MetaProperty<?, ?> metaProperty = createObjectMetaProperty();
         assertSame(metaProperty.declaringType(), TestBean.class);
     }
 
@@ -61,27 +61,27 @@ public abstract class AbstractMetaPropertyTest {
     public final void name_compareWithConstructionArgument_equals()
             throws Exception {
         String name = "thePropertyName";
-        MetaProperty<?> metaProperty = createObjectMetaPropertyWithName(name);
+        MetaProperty<?, ?> metaProperty = createObjectMetaPropertyWithName(name);
         assertEquals(metaProperty.name(), name);
     }
 
     @Test
     public final void propertyType_compareWithIntendedType_same()
             throws Exception {
-        MetaProperty<Object> objectMetaProperty = createObjectMetaProperty();
+        MetaProperty<?, Object> objectMetaProperty = createObjectMetaProperty();
         assertSame(objectMetaProperty.propertyType(), Object.class);
 
-        MetaProperty<String> stringMetaProperty = createStringMetaProperty();
+        MetaProperty<?, String> stringMetaProperty = createStringMetaProperty();
         assertSame(stringMetaProperty.propertyType(), String.class);
 
-        MetaProperty<Integer> primitiveIntegerMetaProperty =
+        MetaProperty<?, Integer> primitiveIntegerMetaProperty =
                 createPrimitiveIntegerMetaProperty();
         assertSame(primitiveIntegerMetaProperty.propertyType(), int.class);
 
-        MetaProperty<Integer> integerMetaProperty = createIntegerMetaProperty();
+        MetaProperty<?, Integer> integerMetaProperty = createIntegerMetaProperty();
         assertSame(integerMetaProperty.propertyType(), Integer.class);
 
-        MetaProperty<List<Double>> doubleListMetaProperty =
+        MetaProperty<?, List<Double>> doubleListMetaProperty =
                 createDoubleListMetaProperty();
         assertSame(doubleListMetaProperty.propertyType(), List.class);
     }
@@ -93,7 +93,7 @@ public abstract class AbstractMetaPropertyTest {
     @Test
     public final void annotations_propertyWithoutAnnotations_reportsNoAnnotations()
             throws Exception {
-        MetaProperty<?> notAnnotatedMetaProperty = createObjectMetaProperty();
+        MetaProperty<?, ?> notAnnotatedMetaProperty = createObjectMetaProperty();
         long annotationsCount = notAnnotatedMetaProperty
                 .annotations()
                 .count();
@@ -103,7 +103,7 @@ public abstract class AbstractMetaPropertyTest {
     @Test
     public final void annotations_propertyWithAnnotations_reportsAnnotations()
             throws Exception {
-        MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
+        MetaProperty<?, ?> annotatedMetaProperty = createStringMetaProperty();
 
         // reports at least one annotation
         long annotationsCount = annotatedMetaProperty
@@ -121,7 +121,7 @@ public abstract class AbstractMetaPropertyTest {
     @Test
     public final void annotationsFiltered_propertyWithoutAnnotations_reportsNoAnnotations()
             throws Exception {
-        MetaProperty<?> notAnnotatedMetaProperty = createObjectMetaProperty();
+        MetaProperty<?, ?> notAnnotatedMetaProperty = createObjectMetaProperty();
         long annotationsCount = notAnnotatedMetaProperty
                 .annotations()
                 .count();
@@ -131,7 +131,7 @@ public abstract class AbstractMetaPropertyTest {
     @Test
     public final void annotationsFiltered_propertyWithoutMatchingAnnotations_reportsNoAnnotations()
             throws Exception {
-        MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
+        MetaProperty<?, ?> annotatedMetaProperty = createStringMetaProperty();
         long notExistingAnnotationsCount = annotatedMetaProperty
                 .annotations(Retention.class)
                 .count();
@@ -141,7 +141,7 @@ public abstract class AbstractMetaPropertyTest {
     @Test
     public final void annotationsFiltered_propertyWithMatchingAnnotations_reportsAnnotations()
             throws Exception {
-        MetaProperty<?> annotatedMetaProperty = createStringMetaProperty();
+        MetaProperty<?, ?> annotatedMetaProperty = createStringMetaProperty();
 
         // reports at least one annotation
         long annotationsCount = annotatedMetaProperty
@@ -160,37 +160,37 @@ public abstract class AbstractMetaPropertyTest {
 
     @Test
     public final void isDerived_derivedProperty_true() throws Exception {
-        MetaProperty<?> metaProperty = createDerivedObjectMetaProperty();
+        MetaProperty<?, ?> metaProperty = createDerivedObjectMetaProperty();
         assertTrue(metaProperty.isDerived());
     }
 
     @Test
     public final void isDerived_notDerivedProperty_false() throws Exception {
-        MetaProperty<?> readOnlyMetaProperty = createObjectMetaProperty();
+        MetaProperty<?, ?> readOnlyMetaProperty = createObjectMetaProperty();
         assertFalse(readOnlyMetaProperty.isDerived());
     }
 
     @Test
     public final void isBuildable_buildableProperty_true() throws Exception {
-        MetaProperty<?> metaProperty = createObjectMetaProperty();
+        MetaProperty<?, ?> metaProperty = createObjectMetaProperty();
         assertTrue(metaProperty.isBuildable());
     }
 
     @Test
     public final void isBuildable_notBuildableProperty_false() throws Exception {
-        MetaProperty<?> readOnlyMetaProperty = createNotBuildableObjectMetaProperty();
+        MetaProperty<?, ?> readOnlyMetaProperty = createNotBuildableObjectMetaProperty();
         assertFalse(readOnlyMetaProperty.isBuildable());
     }
 
     @Test
     public final void isMutable_mutableProperty_true() throws Exception {
-        MetaProperty<?> metaProperty = createObjectMetaProperty();
+        MetaProperty<?, ?> metaProperty = createObjectMetaProperty();
         assertTrue(metaProperty.isMutable());
     }
 
     @Test
     public final void isMutable_readOnlyProperty_false() throws Exception {
-        MetaProperty<?> readOnlyMetaProperty = createReadOnlyObjectMetaProperty();
+        MetaProperty<?, ?> readOnlyMetaProperty = createReadOnlyObjectMetaProperty();
         assertFalse(readOnlyMetaProperty.isMutable());
     }
 
@@ -198,14 +198,14 @@ public abstract class AbstractMetaPropertyTest {
 
     @Test
     public final void get_valueNull_null() throws Exception {
-        MetaProperty<?> metaProperty = createObjectMetaProperty();
+        MetaProperty<?, ?> metaProperty = createObjectMetaProperty();
         TestBean bean = createBean();
         assertNull(metaProperty.get(bean));
     }
 
     @Test
     public final void get_existingValue_sameValue() throws Exception {
-        MetaProperty<String> stringMetaProperty = createStringMetaProperty();
+        MetaProperty<?, String> stringMetaProperty = createStringMetaProperty();
 
         TestBean bean = createBean();
         String value = "the not null value";
@@ -217,21 +217,21 @@ public abstract class AbstractMetaPropertyTest {
     @Test(expectedExceptions = ClassCastException.class)
     public final void get_incorrectBeanType_ClassCastException()
             throws Exception {
-        MetaProperty<?> metaProperty = createObjectMetaProperty();
+        MetaProperty<?, ?> metaProperty = createObjectMetaProperty();
         metaProperty.get("this is no bean");
     }
 
     @Test(expectedExceptions = UnsupportedOperationException.class)
     public final void get_writeOnlyMetaProperty_UnsupportedOperationException()
             throws Exception {
-        MetaProperty<?> readOnlyMetaProperty = createWriteOnlyObjectMetaProperty();
+        MetaProperty<?, ?> readOnlyMetaProperty = createWriteOnlyObjectMetaProperty();
         TestBean bean = createBean();
         readOnlyMetaProperty.get(bean);
     }
 
     @Test
     public final void set_nullForObject_valueIsNull() throws Exception {
-        MetaProperty<Integer> integerMetaProperty = createIntegerMetaProperty();
+        MetaProperty<?, Integer> integerMetaProperty = createIntegerMetaProperty();
 
         TestBean bean = createBean();
         bean.setInteger(42);
@@ -243,7 +243,7 @@ public abstract class AbstractMetaPropertyTest {
 
     @Test
     public final void set_some_valueIsSame() throws Exception {
-        MetaProperty<List<Double>> doubleListMetaProperty =
+        MetaProperty<?, List<Double>> doubleListMetaProperty =
                 createDoubleListMetaProperty();
 
         TestBean bean = createBean();
@@ -257,21 +257,21 @@ public abstract class AbstractMetaPropertyTest {
     @Test(expectedExceptions = ClassCastException.class)
     public final void set_incorrectBeanType_ClassCastException()
             throws Exception {
-        MetaProperty<?> metaProperty = createObjectMetaProperty();
+        MetaProperty<?, ?> metaProperty = createObjectMetaProperty();
         metaProperty.set("this is no bean", null);
     }
 
     @Test(expectedExceptions = ClassCastException.class)
     public final void set_incorrectValueType_ClassCastException()
             throws Exception {
-        MetaProperty<Integer> integerMetaProperty = createIntegerMetaProperty();
+        MetaProperty<?, Integer> integerMetaProperty = createIntegerMetaProperty();
         TestBean bean = createBean();
         integerMetaProperty.set(bean, "this is no integer");
     }
 
     @Test(expectedExceptions = RuntimeException.class)
     public final void set_rejectedValue_RuntimeException() throws Exception {
-        MetaProperty<Integer> primitiveIntegerMetaProperty =
+        MetaProperty<?, Integer> primitiveIntegerMetaProperty =
                 createPrimitiveIntegerMetaProperty();
 
         TestBean bean = createBean();
@@ -283,7 +283,7 @@ public abstract class AbstractMetaPropertyTest {
     @Test(expectedExceptions = UnsupportedOperationException.class)
     public final void set_readOnlyMetaProperty_UnsupportedOperationException()
             throws Exception {
-        MetaProperty<?> readOnlyMetaProperty = createReadOnlyObjectMetaProperty();
+        MetaProperty<?, ?> readOnlyMetaProperty = createReadOnlyObjectMetaProperty();
         TestBean bean = createBean();
         readOnlyMetaProperty.set(bean, "some Value");
     }
@@ -292,9 +292,9 @@ public abstract class AbstractMetaPropertyTest {
 
     @Test
     public final void equals_otherBeanOtherName_false() throws Exception {
-        MetaProperty<?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
-        MetaProperty<?> otherMetaPropertyOnSomeBean =
-                new ComparisonMetaProperty(
+        MetaProperty<?, ?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
+        MetaProperty<?, ?> otherMetaPropertyOnSomeBean =
+                new ComparisonMetaProperty<>(
                         AbstractMetaPropertyTest.class, "somePropertyName");
 
         assertFalse(objectMetaPropertyOnTestBean
@@ -303,9 +303,9 @@ public abstract class AbstractMetaPropertyTest {
 
     @Test
     public final void equals_otherBeanSameName_false() throws Exception {
-        MetaProperty<?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
-        MetaProperty<?> objectMetaPropertyOnSomeBean =
-                new ComparisonMetaProperty(
+        MetaProperty<?, ?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
+        MetaProperty<?, ?> objectMetaPropertyOnSomeBean =
+                new ComparisonMetaProperty<>(
                         AbstractMetaPropertyTest.class, "object");
 
         assertFalse(objectMetaPropertyOnTestBean
@@ -314,9 +314,9 @@ public abstract class AbstractMetaPropertyTest {
 
     @Test
     public final void equals_sameBeanOtherName_false() throws Exception {
-        MetaProperty<?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
-        MetaProperty<?> otherMetaPropertyOnTestBean =
-                new ComparisonMetaProperty(TestBean.class, "somePropertyName");
+        MetaProperty<?, ?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
+        MetaProperty<?, ?> otherMetaPropertyOnTestBean =
+                new ComparisonMetaProperty<>(TestBean.class, "somePropertyName");
 
         assertFalse(objectMetaPropertyOnTestBean
                 .equals(otherMetaPropertyOnTestBean));
@@ -324,9 +324,9 @@ public abstract class AbstractMetaPropertyTest {
 
     @Test
     public final void equals_sameBeanSameName_true() throws Exception {
-        MetaProperty<?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
-        MetaProperty<?> equalMetaProperty =
-                new ComparisonMetaProperty(TestBean.class, "object");
+        MetaProperty<?, ?> objectMetaPropertyOnTestBean = createObjectMetaProperty();
+        MetaProperty<?, ?> equalMetaProperty =
+                new ComparisonMetaProperty<>(TestBean.class, "object");
 
         assertTrue(objectMetaPropertyOnTestBean.equals(equalMetaProperty));
     }
@@ -357,57 +357,58 @@ public abstract class AbstractMetaPropertyTest {
      * Divergent behavior is specified by the factory method's name.
      */
 
-    protected abstract MetaProperty<Object> createObjectMetaProperty()
+    protected abstract MetaProperty<?, Object> createObjectMetaProperty()
             throws Exception;
 
-    protected abstract MetaProperty<Object> createObjectMetaPropertyWithMetaBean(
-            MetaBean metaBean)
+    protected abstract <B> MetaProperty<B, Object> createObjectMetaPropertyWithMetaBean(
+            MetaBean<B> metaBean)
             throws Exception;
 
-    protected abstract MetaProperty<Object> createObjectMetaPropertyWithName(
+    protected abstract MetaProperty<?, Object> createObjectMetaPropertyWithName(
             String name)
             throws Exception;
 
-    protected abstract MetaProperty<Object> createReadOnlyObjectMetaProperty()
+    protected abstract MetaProperty<?, Object> createReadOnlyObjectMetaProperty()
             throws Exception;
 
-    protected abstract MetaProperty<Object> createWriteOnlyObjectMetaProperty()
+    protected abstract MetaProperty<?, Object> createWriteOnlyObjectMetaProperty()
             throws Exception;
 
-    protected abstract MetaProperty<Object> createDerivedObjectMetaProperty()
+    protected abstract MetaProperty<?, Object> createDerivedObjectMetaProperty()
             throws Exception;
 
-    protected abstract MetaProperty<Object> createNotBuildableObjectMetaProperty()
+    protected abstract MetaProperty<?, Object> createNotBuildableObjectMetaProperty()
             throws Exception;
 
-    protected abstract MetaProperty<String> createStringMetaProperty()
+    protected abstract MetaProperty<?, String> createStringMetaProperty()
             throws Exception;
 
-    protected abstract MetaProperty<Integer> createPrimitiveIntegerMetaProperty()
+    protected abstract MetaProperty<?, Integer> createPrimitiveIntegerMetaProperty()
             throws Exception;
 
-    protected abstract MetaProperty<Integer> createIntegerMetaProperty()
+    protected abstract MetaProperty<?, Integer> createIntegerMetaProperty()
             throws Exception;
 
-    protected abstract MetaProperty<List<Double>> createDoubleListMetaProperty()
+    protected abstract MetaProperty<?, List<Double>> createDoubleListMetaProperty()
             throws Exception;
 
     /* 
      * inner classes ----------------------------------------------------------
      */
 
-    private static class ComparisonMetaProperty implements MetaProperty<Void> {
+    private static class ComparisonMetaProperty<B>
+            implements MetaProperty<B, Void> {
 
-        private final Class<?> declaringType;
+        private final Class<B> declaringType;
         private final String name;
 
-        public ComparisonMetaProperty(Class<?> declaringType, String name) {
+        public ComparisonMetaProperty(Class<B> declaringType, String name) {
             this.declaringType = declaringType;
             this.name = name;
         }
 
         @Override
-        public MetaBean metaBean() {
+        public MetaBean<B> metaBean() {
             throw new UnsupportedOperationException();
         }
 
@@ -422,7 +423,7 @@ public abstract class AbstractMetaPropertyTest {
         }
 
         @Override
-        public Class<?> declaringType() {
+        public Class<B> declaringType() {
             return declaringType;
         }
 

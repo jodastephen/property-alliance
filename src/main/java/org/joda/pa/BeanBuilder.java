@@ -27,9 +27,9 @@ import java.util.Map;
  * <p>
  * A {@code BeanBuilder} is obtained from a {@link MetaBean}.
  * 
- * @param <T>  the type of the bean to be created
+ * @param <B>  the type of the bean to be created
  */
-public interface BeanBuilder<T> {
+public interface BeanBuilder<B> {
 
     /**
      * Gets the value of a single property previously added to the builder.
@@ -40,7 +40,7 @@ public interface BeanBuilder<T> {
      * @return the previously set value, null if none
      * @throws RuntimeException if the property or builder is invalid
      */
-    Object get(MetaProperty<?> property);
+    Object get(MetaProperty<?, ?> property);
 
     /**
      * Sets the value of a single property into the builder.
@@ -54,7 +54,7 @@ public interface BeanBuilder<T> {
      * @throws UnsupportedOperationException if the property is not {@link MetaProperty#isBuildable() buildable}
      * @throws RuntimeException if the property or builder is invalid
      */
-    BeanBuilder<T> set(MetaProperty<?> property, Object value);
+    BeanBuilder<B> set(MetaProperty<?, ?> property, Object value);
 
     /**
      * Builds the bean from the properties previously set into the builder.
@@ -65,6 +65,6 @@ public interface BeanBuilder<T> {
      * @return the created bean, not null
      * @throws RuntimeException if the builder is invalid
      */
-    T build();
+    B build();
 
 }
