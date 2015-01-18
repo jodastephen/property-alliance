@@ -37,11 +37,11 @@ public interface MetaProperty<B, P> {
     /**
      * Gets the meta-bean that defines this meta-property.
      * <p>
-     * Each meta-property is fully owned by a single meta-bean.
+     * A meta-property might belong to several meta-beans.
      * 
      * @return the meta-bean, not null
      */
-    MetaBean<B> metaBean();
+    MetaBean<? super B> metaBean();
 
     /**
      * Gets the property name.
@@ -67,7 +67,7 @@ public interface MetaProperty<B, P> {
      * 
      * @return the type declaring the property, not null
      */
-    default Class<B> declaringType() {
+    default Class<? super B> declaringType() {
         return metaBean().beanType();
     }
 

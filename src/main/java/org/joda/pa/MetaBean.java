@@ -105,7 +105,7 @@ public interface MetaBean<B> {
      * 
      * @return the stream of properties on the bean, not null
      */
-    Stream<MetaProperty<B, ?>> metaProperties();
+    Stream<MetaProperty<? super B, ?>> metaProperties();
 
     /**
      * Gets a single property by name.
@@ -125,7 +125,8 @@ public interface MetaBean<B> {
      * @param propertyName the property name to retrieve, null returns an empty {@code Optional}
      * @return the property, or optional empty if no such property
      */
-    default Optional<MetaProperty<B, ?>> metaProperty(String propertyName) {
+    default Optional<MetaProperty<? super B, ?>> metaProperty(
+            String propertyName) {
         return metaProperties()
                 .filter(mp -> mp.name().equals(propertyName))
                 .findFirst();
