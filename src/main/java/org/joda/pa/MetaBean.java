@@ -36,8 +36,10 @@ import java.util.stream.Stream;
  * Implementations of this interface will typically represent the properties and annotations
  * of a fixed concrete class. However, implementations are permitted to be dynamic,
  * creating properties and/or annotations on demand.
+ * 
+ * @param <B> the type of the bean this meta-bean is associated with 
  */
-public interface MetaBean {
+public interface MetaBean<B> {
 
     /**
      * Obtains a meta-bean for a {@code Class}.
@@ -47,7 +49,7 @@ public interface MetaBean {
      * @param cls  the class whose associated {@code MetaBean} will be obtained
      * @return the meta-bean associated with the class, not null
      */
-    static MetaBean of(Class<?> cls) {
+    static <B> MetaBean<B> of(Class<B> cls) {
         return null;
     }
 
@@ -60,7 +62,7 @@ public interface MetaBean {
      * 
      * @return the type of the bean, not null
      */
-    Class<?> beanType();
+    Class<B> beanType();
 
     /**
      * Checks whether this bean is buildable or not.
@@ -87,7 +89,7 @@ public interface MetaBean {
      * @throws UnsupportedOperationException if the bean cannot be created
      * @see #isBuildable()
      */
-    BeanBuilder<?> beanBuilder();
+    BeanBuilder<B> beanBuilder();
 
     //-----------------------------------------------------------------------
     /**
@@ -103,7 +105,7 @@ public interface MetaBean {
      * 
      * @return the stream of properties on the bean, not null
      */
-    Stream<MetaProperty<?>> metaProperties();
+    Stream<MetaProperty<? super B, ?>> metaProperties();
 
     /**
      * Gets a single property by name.
@@ -123,7 +125,8 @@ public interface MetaBean {
      * @param propertyName the property name to retrieve, null returns an empty {@code Optional}
      * @return the property, or optional empty if no such property
      */
-    default Optional<MetaProperty<?>> metaProperty(String propertyName) {
+    default Optional<MetaProperty<? super B, ?>> metaProperty(
+            String propertyName) {
         return metaProperties()
                 .filter(mp -> mp.name().equals(propertyName))
                 .findFirst();

@@ -29,18 +29,19 @@ import java.util.stream.Stream;
  * <p>
  * A {@code MetaProperty} is obtained from a {@link MetaBean}.
  * 
- * @param <P>  the type of the property content
+ * @param <B> the type associated with the meta-bean that defines this meta-property 
+ * @param <P> the type of the property content
  */
-public interface MetaProperty<P> {
+public interface MetaProperty<B, P> {
 
     /**
      * Gets the meta-bean that defines this meta-property.
      * <p>
-     * Each meta-property is fully owned by a single meta-bean.
+     * A meta-property might belong to several meta-beans.
      * 
      * @return the meta-bean, not null
      */
-    MetaBean metaBean();
+    MetaBean<? super B> metaBean();
 
     /**
      * Gets the property name.
@@ -66,7 +67,7 @@ public interface MetaProperty<P> {
      * 
      * @return the type declaring the property, not null
      */
-    default Class<?> declaringType() {
+    default Class<? super B> declaringType() {
         return metaBean().beanType();
     }
 
@@ -180,6 +181,11 @@ public interface MetaProperty<P> {
      * <p>
      * For a standard Java Bean, this is equivalent to calling {@code getFoo()} on the bean.
      * Alternate implementations may perform any logic to obtain the value.
+     * <p>
+     * The argument {@code bean} is not generic (in {@code B}) because this would prevent
+     * calling {@code get} on {@code MetaProperty<?, ?>}.
+     * Since meta-properties will often be handled by frameworks, this is a common use-case
+     * which needs to be supported.
      * 
      * @param bean  the bean to query, not null
      * @return the value of the property on the specified bean, may be null
@@ -195,8 +201,8 @@ public interface MetaProperty<P> {
      * For a standard Java Bean, this is equivalent to calling {@code setFoo()} on the bean.
      * Alternate implementations may perform any logic to change the value.
      * <p>
-     * The argument {@code value} is not generic (in {@code P}) because this would
-     * prevent calling {@code set} on {@code MetaProperty<?>}.
+     * The arguments {@code bean} and {@code value} are not generic (in {@code B} or {@code P})
+     * because this would prevent calling {@code set} on {@code MetaProperty<?, ?>}.
      * Since meta-properties will often be handled by frameworks, this is a common use-case
      * which needs to be supported.
      * 

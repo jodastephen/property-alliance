@@ -26,8 +26,10 @@ package org.joda.pa;
  * It is not a requirement that all beans implement this interface.
  * If a type does not implement the interface then reflection will be used to examine
  * getters and setters as per the original Java Bean specification.
+ * 
+ * @param <B> the type of the bean
  */
-public interface Bean {
+public interface Bean<B> {
 
     /**
      * Gets the meta-bean representing the parts of the bean that are
@@ -37,6 +39,6 @@ public interface Bean {
      * 
      * @return the meta-bean, not null
      */
-    MetaBean metaBean();
+    MetaBean<B> metaBean();
 
 }

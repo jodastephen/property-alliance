@@ -24,15 +24,16 @@ import java.util.stream.Stream;
  * A {@link MetaProperty} which reflects on {@link Method}s
  * (provided during construction) to get/set values and access annotations.
  * 
+ * @param <B> the type associated with the meta-bean that defines this meta-property 
  * @param <P> the type of the property content
  */
-class MethodMetaProperty<P> extends AbstractMetaProperty<P> {
+class MethodMetaProperty<B, P> extends AbstractMetaProperty<B, P> {
 
     private final Method getValue;
     private final Method setValue;
 
     protected MethodMetaProperty(
-            MetaBean metaBean, String name, Class<P> propertyTypeToken,
+            MetaBean<B> metaBean, String name, Class<P> propertyTypeToken,
             boolean derived, boolean buildable,
             Method getValue, Method setValue) {
 
